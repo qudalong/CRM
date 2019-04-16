@@ -1,0 +1,238 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">客户跟进</h4>
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="white-box">
+                                            <div class="myadmin-dd dd">
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="1">
+                                                        <div class="dd-handle">客户名称：<span class="clientName"></span> </div>
+                                                    </li>
+                                                    <li class="dd-item1" data-id="1">
+                                                        <div class="dd-handle">跟进次数：
+                                                            <sapn id="followCount">
+                                                                </span>
+                                                        </div>
+                                                        <button class="followBtn tn btn-success btn-xm btn-outline btn-rounded m-l-10">跟进详情</button>
+                                                    </li>
+                                                    <li id='followItem' class="dd-item" data-id="2"></li>
+                                                    <div class="m-t-20">
+                                                        <button data-toggle="modal" data-target="#addClient" class="btn btn-success btn-sm btn-outline btn-rounded m-l-30">填写记录</button>
+                                                        <button onclick="moveToPublic(this)" class="btn btn-success btn-sm btn-outline btn-rounded m-l-10">放入公海</button>
+                                                    </div>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- .row （详情弹窗 添加客户）-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- sample modal content -->
+                                        <div id="addClient" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                        <div class="modal-title">添加客户</div>
+                                                    </div>
+                                                    <div class="modal-body modalScroll form-group-b-0">
+                                                        <!-- /row 新建客户开始-->
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <form data-toggle="validator" class="form-horizontal form-bordered">
+                                                                    <div class="form-body">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">客户姓名</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id='c_name' type="text" value='' readonly="readonly" placeholder="请输入客户姓名" class="form-control ">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">客户类型</label>
+                                                                            <div class="col-md-7">
+                                                                                <select id='c_type' class="form-control">
+                                                                                    <option checked="checked">请选择客户类型</option>
+                                                                                    <option value="1">再联系</option>
+                                                                                    <option value="2">忙，没有时间</option>
+                                                                                    <option value="3">不打算购买</option>
+                                                                                    <option value="4">有意向购买</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="c_type help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">联系时间</label>
+                                                                            <div class="col-md-3">
+                                                                                <input id='c_linkdate' type="text" class="form-control mydatepicker" placeholder="年/月/日" data-error="请选择日期" required>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">备注</label>
+                                                                            <div class="col-md-7">
+                                                                                <textarea id='c_remark' class="form-control textareaH" placeholder='请输入备注' data-error="请输入备注" required></textarea>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">下次联系时间</label>
+                                                                            <div class="col-md-3">
+                                                                                <input id='c_linkdate_re' type="text" class="form-control mydatepicker" placeholder="年/月/日" data-error="请选择日期" required>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group  text-center">
+                                                                            <button type="submit" class="btn btn-info bra5" onclick="editClient()">确定</button>
+                                                                        </div>
+                                                                </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+                            </div>
+                        </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_followItem">
+            {{for}}
+            <ol class="dd-list followItem">
+                <li class="dd-item">
+                    <div class="dd-handle">客户姓名：<span class="clientName"></span> </div>
+                </li>
+                <li class="dd-item">
+                    <div class="dd-handle">联系时间：{{:contactTime}} </div>
+                </li>
+                <li class="dd-item">
+                    <div class="dd-handle">联系反馈： {{if contactFeedback==1}}再联系 {{else contactFeedback==2}}忙，没有时间 {{else contactFeedback==3}}不打算购买 {{else contactFeedback==4}}有意向购买 {{/if}}
+                    </div>
+                </li>
+                <li class="dd-item">
+                    <div class="dd-handle">备注：{{:contactRemark}} </div>
+                </li>
+            </ol>
+            {{/for}}
+        </script>
+        <script>
+            var salesmanCustomerId_follow, customerName_follow, customerId_follow;
+            window.onload = function() {
+                salesmanCustomerId_follow = localStorage.getItem("salesmanCustomerId_follow") || ''; // yi移入公海时用的id
+                customerId_follow = localStorage.getItem("customerId_follow") || '';
+                customerName_follow = localStorage.getItem("customerName_follow") || '';
+                // 编辑时客户姓名回显
+                $('#c_name').val(customerName_follow);
+                followItemDesc(customerId_follow);
+            }
+
+            //类型 
+            var type = '';
+            $("#c_type").change(function() {
+                type = $(this).val();
+                commCkSelect(".c_type", type, '请选择客户类型');
+            });
+
+
+
+            //编辑客户
+            function editClient() {
+                commCkSelect(".c_type", type, '请选择客户类型');
+                var linkTime = $('#c_linkdate').val();
+                var re_linkTime = $('#c_linkdate_re').val();
+                var contactRemark = $('#c_remark').val();
+                console.log(type);
+                if (linkTime && re_linkTime && contactRemark && type) {
+                    console.log("验证通过");
+                    $.ajax({
+                        url: apiPath + 'api/customerContact/insert',
+                        data: {
+                            customerId: customerId_follow,
+                            contactTime: linkTime,
+                            nextContactTime: re_linkTime,
+                            contactFeedback: type, //联系反馈 1再联系 2 忙，没有时间 3不打算购买 4有意向购买
+                            contactRemark: contactRemark
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                followItemDesc(customerId_follow);
+                                $('#addClient').modal('hide');
+                            }
+                        }
+                    });
+                } else {
+                    console.info("验证错误");
+                    return;
+                }
+            }
+
+            //放入公海
+            function moveToPublic() {
+                $.ajax({
+                    url: apiPath + 'api/customer/moveToPublic',
+                    data: {
+                        salesmanCustomerId: salesmanCustomerId_follow
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            swal({
+                                title: "",
+                                text: "移入公海成功！",
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        }
+                    }
+                });
+            }
+
+            function followItemDesc(customerId) {
+                var tmpl = $.templates("#J_tpl_followItem");
+                $.ajax({
+                    url: apiPath + 'api/customerContact/list',
+                    data: {
+                        customerId: customerId
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            var html = tmpl.render(data);
+                            $("#followItem").html(html);
+                            // 跟进次数和客户姓名
+                            $('#followCount').html(data.length);
+                            $('.clientName').html(customerName_follow);
+                        }
+                    }
+                });
+            }
+        </script>

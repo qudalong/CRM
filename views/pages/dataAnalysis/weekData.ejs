@@ -1,0 +1,164 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">数据分析>客户一周新增数据</h4>
+                                    </div>
+                                </div>
+                                <!-- row -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control mydatepicker" placeholder="年-月-日">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button data-toggle="modal" data-target="#addClient" class="btn btn-block btn-success btn-rounded">一周业绩统计</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <!-- <ul class="list-inline text-right">
+                                                <li>
+                                                    <h5><i class="fa fa-circle m-r-5" style="color: #00bfc7;"></i>客户数</h5>
+                                                </li>
+                                                <li>
+                                                    <h5><i class="fa fa-circle m-r-5" style="color: #fdc006;"></i>新增客户数</h5>
+                                                </li>
+                                            </ul> -->
+                                            <div id="client-area-chart" style="width:100%;height:400px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+
+                            <!-- /#page-wrapper -->
+                        </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+
+        <script>
+            window.onload = function() {
+                weekCustomerData();
+
+            }
+
+            //客户一周新增数据
+            var WeekList = [],
+                days = [];
+
+            function weekCustomerData() {
+                $.ajax({
+                    url: apiPath + 'api/analysis/weekAchievement',
+                    type: 'post',
+                    data: {
+                        choiceDay: ''
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result;
+                            days = data.days;
+                            WeekList = data.organizationAchievementWeekList;
+                            var shops = [];
+                            var dataList = [];
+                            for (var i in WeekList) {
+                                shops.push(WeekList[i].organizationName);
+                                var dataItem = WeekList[i].achievement;
+                                dataList.push(dataItem)
+                            }
+                            console.log(dataList)
+                                // console.log(days)
+                                // console.log(shops)
+                                // console.log(WeekList)
+                            var myChart = echarts.init(document.getElementById('client-area-chart'));
+                            var option = {
+                                title: {
+                                    text: '业绩额(单位：元)',
+                                    textStyle: {
+                                        fontSize: 14
+                                    }
+                                },
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data: shops,
+                                    left: 'right'
+                                },
+                                grid: {
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    data: days
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    name: shops[0],
+                                    type: 'line',
+                                    data: dataList[0]
+                                }, {
+                                    name: shops[1],
+                                    type: 'line',
+                                    data: dataList[1]
+                                }, {
+                                    name: shops[2],
+                                    type: 'line',
+                                    data: dataList[2]
+                                }, {
+                                    name: shops[3],
+                                    type: 'line',
+                                    data: dataList[3]
+                                }, {
+                                    name: shops[4],
+                                    type: 'line',
+                                    data: dataList[4]
+                                }, {
+                                    name: shops[5],
+                                    type: 'line',
+                                    data: dataList[5]
+                                }]
+                            };
+                            myChart.setOption(option);
+                        }
+                    }
+                });
+            }
+
+
+            $(".morris-default-style").on("click", function() {
+                var weekItemTime = $(this).find(".morris-hover-row-label").text();
+                window.location.href = "/pages/dataAnalysis/weekDataDesc";
+                localStorage.setItem("weekItemTime", weekItemTime);
+                console.log('weekItemTime=' + weekItemTime);
+            });
+        </script>

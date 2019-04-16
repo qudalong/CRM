@@ -1,0 +1,402 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title"><a href="/pages/system/organization">精英堂</a> > 南京直营店</h4>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <input id="demo-input-search2" type="text" placeholder="搜索" class="form-control" autocomplete="off">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button data-toggle="modal" data-target="#addUser" class="btn btn-info btn-block btn-rounded">+添加成员</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <table id="demo-foo-row-toggler" data-page-size="5" class="table  table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class='clickAuto' data-sort-ignore="true">成员姓名</th>
+                                                        <th data-sort-ignore="true">联系方式</th>
+                                                        <th data-sort-ignore="true" class="min-width">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="menu_tableMyOri">
+                                                    <%for(var i=1;i<6;i++) {%>
+                                                        <tr>
+                                                            <th class='clickAuto'>张浩
+                                                                <%=i%>
+                                                                    <%if(i==1){%>
+                                                                        <button class="btn btn-xs btn-info btn-outline btn-rounded m-l-5">管理员</button>
+                                                                        <%}%>
+                                                            </th>
+                                                            <td>18768774878</td>
+                                                            <td>
+                                                                <button data-toggle="modal" data-target="#editUser" class="btn btn-sm btn-icon btn-pure btn-outline ">
+                                                            <i class="fa fa-pencil-square-o edit-icon"></i> </button>
+                                                                <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip">
+                                                           <i class="ti-trash delete-icon"></i>
+                                                        </button>
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <!-- .row （添加成员弹窗）-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div id="addUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                        <div class="modal-title">华北办 > 添加成员</div>
+                                                    </div>
+                                                    <div class="modal-body modalScroll">
+                                                        <form data-toggle="validator" class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label for="inputUser" class="col-sm-2 control-label">用户名</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="inputUser" placeholder="请输入用户名" data-error="请输入用户名" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputUserTel" class="col-sm-2 control-label">角色</label>
+                                                                <div class="col-sm-9">
+                                                                    <select id="roleSelect" class="form-control" data-error="请选择角色" required>
+                                                                    <option checked="checked">请选择角色</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">3</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="roleSelect help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="pwd" class="col-sm-2 control-label">密码</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="password" class="form-control" id="pwd" placeholder="请输入密码" data-toggle="validator" data-minlength="6" data-error="请输入密码(最少6位数)" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="rePwd" class="col-sm-2 control-label">确认密码</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="password" class="form-control" id="rePwd" placeholder="请再次输入密码" data-match="#pwd" data-error="请再次输入密码" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputName" class="col-sm-2 control-label">姓名</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="inputName" placeholder="请输入成员姓名" data-error="请输入成员姓名" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputTel" class="col-sm-2 control-label">手机号</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="tel" class="form-control" id="inputTel" data-minlength="11" maxlength='11' placeholder="请输入成员手机号" data-error="请输入成员手机号" required>
+                                                                </div>
+                                                                <div class="telMsg help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button onclick="addUser()" type="submit" class="btn btn-info bra5">确定</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <!-- .row （编辑成员弹窗）-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div id="editUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                        <div class="modal-title">华北办 > 编辑成员</div>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label for="e_userName" class="col-sm-2 control-label">姓名</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="e_userName" value="张浩1" placeholder="请输入成员姓名">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="e_userTel" class="col-sm-2 control-label">手机号</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="e_userTel" value="18768774878" placeholder="请输入成员手机号">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer text-center">
+                                                        <button type="button" class="btn btn-info bra5" onclick="editUserSave()">确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <footer class="footer text-center"> Copyright ©2019 .精英堂. All Rights Reserved </footer>
+                        </div>
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_myOri">
+            {{for}}
+            <tr>
+                <th class='clickAuto'>{{:nickname}}
+                    <button class="btn btn-xs btn-info btn-outline btn-rounded m-l-5">管理员</button>
+                </th>
+                <td>{{:phoneNumber}}</td>
+                <td>
+                    <button onclick="editUser(this)" nickname={{:nickname}} phoneNumber={{:phoneNumber}} userId={{:userId}} data-toggle="modal" data-target="#editUser" class="btn btn-sm btn-icon btn-pure btn-outline ">
+                        <i class="fa fa-pencil-square-o edit-icon"></i> 
+                    </button>
+                    <button onclick="deleteUser(this)" userId={{:userId}} type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="tooltip">
+                        <i class="ti-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            window.onload = function() {
+                myOrganList();
+                // 查询角色列表
+                selectUnderRole();
+            }
+
+            var global_organizationId_add, global_roid_add;
+
+            //添加用户选取角色id
+            $("#roleSelect").change(function() {
+                global_roid_add = $(this).val();
+                commCkSelect(".roleSelect", global_roid_add, '请选择角色');
+                console.log(global_roid_add);
+            })
+
+            function selectUnderRole() {
+                $.ajax({
+                    url: apiPath + 'api/role/selectUnderRole',
+                    type: 'post',
+                    data: {},
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            $("#roleSelect").html(returnOptionHtml(data));
+                        }
+                    }
+                });
+            }
+
+            function returnOptionHtml(list) {
+                var optionHtml = `<option checked="checked">请选择角色</option>`;
+                for (var i = 0; i < list.length; i++) {
+                    optionHtml += `<option value=${list[i].roleId}>${list[i].name}</option>`
+                }
+                return optionHtml;
+            }
+            //修改获取全局用户id
+            var userId_edit, nickName_edit, phoneNumber_edit;
+
+            function editUser(el) {
+                userId_edit = $(el).attr("userid");
+                nickName_edit = $(el).attr('nickname');
+                phoneNumber_edit = $(el).attr('phonenumber');
+                $("#e_userName").val(nickName_edit);
+                $("#e_userTel").val(phoneNumber_edit);
+            }
+
+            //编辑用户保存
+            function editUserSave() {
+                var MD5pwd = b64_md5("123");
+                var e_userName = $("#e_userName").val();
+                var e_userTel = $("#e_userTel").val();
+                $.ajax({
+                    url: apiPath + 'api/crmUser/update',
+                    type: 'post',
+                    data: {
+                        userId: userId_edit,
+                        password: MD5pwd,
+                        nickname: e_userName,
+                        phoneNumber: e_userTel,
+                        organizationId: global_organizationId_add,
+                        roleId: global_roid_add
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            $('#editUser').modal('hide');
+                            myOrganList();
+                        }
+                    }
+                });
+            }
+            //删除用户
+            function deleteUser(el) {
+                var userId = $(el).attr('userid');
+                swal({
+                    title: "你确定删除吗?",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: "取消",
+                    confirmButtonText: "确定"
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: apiPath + 'api/crmUser/delete',
+                            type: 'post',
+                            data: {
+                                userId: userId
+                            },
+                            dataType: 'JSON',
+                            success: function(res) {
+                                if (res.code == 200) {
+                                    myOrganList();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+            //我的组织列表
+            function myOrganList() {
+                var tmpl = $.templates("#J_tpl_myOri");
+                $.ajax({
+                    url: apiPath + 'api/crmUser/list',
+                    type: 'post',
+                    data: {
+                        organizationId: '',
+                        keyword: ''
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            // 设置全局organizationId
+                            global_organizationId_add = data[0].organizationId;
+                            var html = tmpl.render(data);
+                            $("#menu_tableMyOri").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+                    }
+                });
+            }
+
+            // 手机号验证
+            $("#inputTel").blur(function() {
+                var tel = $("#inputTel").val();
+                commCkTel(tel);
+            });
+
+            function addUser() {
+                commCkSelect(".roleSelect", global_roid_add, '请选择角色');
+                var tel = $("#inputTel").val();
+                commCkTel(tel);
+                var MD5pwd = b64_md5("123");
+                $.ajax({
+                    url: apiPath + 'api/crmUser/insert',
+                    type: 'post',
+                    data: {
+                        username: 'admin',
+                        password: MD5pwd,
+                        nickname: '刘全全',
+                        phoneNumber: '18768871897',
+                        organizationId: global_organizationId_add,
+                        roleId: global_roid_add
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            $('#addUser').modal('hide');
+                            myOrganList();
+                        }
+                    }
+                });
+            }
+
+            function addUser1() {
+                var userName = $("#inputUserName").val();
+                var userTel = $("#inputUserTel").val();
+                var reg_tel = /^1[34578]\d{9}$/;
+                if (!userName.trim()) {
+                    swal({
+                        title: "",
+                        text: "成员姓名不能为空！",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    return
+                } else if (!userTel.trim()) {
+                    swal({
+                        title: "",
+                        text: "成员手机号不能为空！",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    return
+                } else if (!reg_tel.test(userTel)) {
+                    swal({
+                        title: "",
+                        text: "请输入正确的手机号",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    return
+                }
+                $('#addUser').modal('hide');
+            }
+        </script>

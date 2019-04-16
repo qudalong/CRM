@@ -1,0 +1,158 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">数据分析>客户一周新增数据</h4>
+                                    </div>
+                                </div>
+                                <!-- row -->
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control mydatepicker" placeholder="年-月-日">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button data-toggle="modal" data-target="#addClient" class="btn btn-block btn-success btn-rounded">一周新增数据</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <!-- <ul class="list-inline text-right">
+                                                <li>
+                                                    <h5><i class="fa fa-circle m-r-5" style="color: #00bfc7;"></i>客户数</h5>
+                                                </li>
+                                                <li>
+                                                    <h5><i class="fa fa-circle m-r-5" style="color: #fdc006;"></i>新增客户数</h5>
+                                                </li>
+                                            </ul> -->
+                                            <div id="client-area-chart" style="width:100%;height:400px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+
+                            <!-- /#page-wrapper -->
+                        </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script>
+            window.onload = function() {
+                weekCustomerData();
+            }
+
+            //客户一周新增数据
+            var total = [],
+                today = [],
+                days = [];
+
+            function weekCustomerData() {
+                $.ajax({
+                    url: apiPath + 'api/analysis/weekCustomerData',
+                    type: 'post',
+                    data: {
+                        choiceDay: ''
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result;
+                            total = data.countWeekAll;
+                            today = data.countWeekDaily;
+                            days = data.days;
+                            console.log(total)
+                            console.log(today)
+                            console.log(days)
+
+                            // a = [838, 876, 917, 945, 974, 1010, 1010];
+                            // a2 = [40, 38, 41, 28, 29, 36, 0];
+                            // a3 = ["2019-04-03", "2019-04-04", "2019-04-05", "2019-04-06", "2019-04-07", "2019-04-08", "2019-04-09"];
+
+                            var myChart = echarts.init(document.getElementById('client-area-chart'));
+                            var option = {
+                                title: {
+                                    text: '客户数(单位：个)',
+                                    textStyle: {
+                                        fontSize: 14
+                                    }
+                                },
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data: ['客户数', '新增客户数'],
+                                    left: 'right'
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    data: days
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    name: '客户数',
+                                    data: total,
+                                    type: 'line',
+                                    itemStyle: {
+                                        normal: {
+                                            lineStyle: {
+                                                color: '#00BFC7'
+                                            }
+                                        }
+                                    }
+                                }, {
+                                    name: '新增客户数',
+                                    data: today,
+                                    type: 'line',
+                                    itemStyle: {
+                                        normal: {
+                                            lineStyle: {
+                                                color: '#FDC006'
+                                            }
+                                        }
+                                    }
+                                }]
+                            };
+                            myChart.setOption(option);
+                            //echarts图表点击跳转
+                            myChart.on('click', function(param) {
+                                var weekItemTime = param.name;
+                                console.log(weekItemTime)
+                                window.location.href = "/pages/dataAnalysis/weekAddItemDesc";
+                                localStorage.setItem("weekItemTime", weekItemTime);
+                            });
+                        }
+                    }
+                });
+            }
+
+            $(".morris-default-style").on("click", function() {
+                var weekItemTime = $(this).find(".morris-hover-row-label").text();
+                window.location.href = "/pages/dataAnalysis/weekAddItemDesc";
+                localStorage.setItem("weekItemTime", weekItemTime);
+                console.log('weekItemTime=' + weekItemTime);
+            });
+        </script>

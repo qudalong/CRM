@@ -1,0 +1,86 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">客户公海 > 分配客户</h4>
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                                <!-- /.row -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                    <h4 class="panel-title"> <a class="collapsed toggle-a font-bold" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> 郑州直营店 </a></h4>
+                                                </div>
+                                                <div id="collapseTwo" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <%for(var i=1;i<5;i++){%>
+                                                        <div class="row p-5-40" onclick="allotClinet(this)">
+                                                            <div class="checkbox checkbox-success checkbox-circle">
+                                                                <input class="col-lg-2 " id="checkbox-<%=i%>" type="checkbox" value="李毅<%=i%>">
+                                                                <%if(i==1){%>
+                                                                    <label class="col-lg-10" for="checkbox-<%=i%>"> 李毅<%=i%><button class="btn btn-outline btn-success btn-rounded btn-xs m-l-5">管理员</button> </label>
+                                                                    <%}else{%>
+                                                                        <label class="col-lg-10" for="checkbox-<%=i%>"> 李毅<%=i%></label>
+                                                                        <%}%>
+                                                            </div>
+                                                        </div>
+                                                        <%}%>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingThree">
+                                                    <h4 class="panel-title"> <a class="font-bold toggle-a collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> 南京直营店 </a> </h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <%for(var i=1;i<5;i++){%>
+                                                        <div class="row p-5-40">
+                                                            <div class="checkbox checkbox-success checkbox-circle">
+                                                                <input class="col-lg-2 " id="checkbox-1<%=i%>" type="checkbox">
+                                                                <%if(i==1){%>
+                                                                    <label class="col-lg-10" for="checkbox-<%=i%>"> 李明<%=i%><button class="btn btn-outline btn-success btn-rounded btn-xs m-l-5">管理员</button> </label>
+                                                                    <%}else{%>
+                                                                        <label class="col-lg-10" for="checkbox-<%=i%>"> 李明<%=i%></label>
+                                                                        <%}%>
+                                                            </div>
+                                                        </div>
+                                                        <%}%>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- .row -->
+                            </div>
+                            <!-- /.container-fluid -->
+                            <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+                        </div>
+
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script>
+            function allotClinet(el) {
+                var val = $(el).find("input").val();
+                console.log(val)
+            }
+        </script>

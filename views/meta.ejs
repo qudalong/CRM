@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="/plugins/images/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Footable CSS -->
+    <link href="/plugins/bower_components/footable/css/footable.core.css" rel="stylesheet">
+    <link href="/plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <!-- Menu CSS -->
+    <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <link href="/plugins/bower_components/tablesaw-master/dist/tablesaw.css" rel="stylesheet">
+    <!--alerts CSS -->
+    <link href="/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+    <!-- 时间区间 css -->
+    <link href="/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <link href="/plugins/bower_components/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="/plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/plugins/bower_components/nestable/nestable.css" rel="stylesheet" type="text/css" />
+    <!-- animation CSS -->
+    <link href="/vendors/css/animate.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/vendors/css/style.css" rel="stylesheet">
+    <!-- Morris CSS -->
+    <link href="/plugins/bower_components/morrisjs/morris.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="/vendors/css/colors/default-dark.css" id="theme" rel="stylesheet">
+    <link href="/vendors/css/colors/my.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <script src="/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/vendors/jsrender.js"></script>
+    <script>
+        // document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
+    <script type="text/javascript">
+        var apiPath = 'http://192.168.0.104:8081/crm/';
+
+        // 获取当前日期
+        var myDate = new Date(),
+            year = myDate.getFullYear(),
+            month = myDate.getMonth() + 1,
+            day = myDate.getDate();
+        month > 10 ? month = month : month = '0' + month;
+        day > 10 ? day = day : day = '0' + day;
+        var yearMonth = year + '-' + month;
+
+        //公共手机验证
+        function commCkTel(tel) {
+            var regTel = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+            if (!regTel.test(tel)) {
+                $(".telMsg").addClass("my-error").text('请填写正确的手机号码');
+                return false;
+            } else {
+                $(".telMsg").removeClass("my-error");
+            }
+        }
+
+        //公共Select验证
+        function commCkSelect(el, val, msg) {
+            if (!val || val == msg) {
+                $(el).addClass("my-error").text(msg);
+                return false;
+            } else {
+                $(el).removeClass("my-error");
+            }
+        }
+    </script>

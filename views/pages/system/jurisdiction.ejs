@@ -1,0 +1,508 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">权限管理</h4>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <input id="demo-input-search2" type="text" placeholder="搜索" class="form-control" autocomplete="off">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button data-toggle="modal" data-target="#addRole" class="btn btn-info btn-block btn-rounded">+添加角色</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <table id="demo-foo-addrow22" class="table  table-hover toggle-circle" data-page-size="5">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="clickAuto" data-sort-initial="true">序号</th>
+                                                        <th data-sort-ignore="true">角色</th>
+                                                        <th data-sort-ignore="true" class="min-width">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="jurisd_table">
+                                                    <!-- <%for(var i=1;i<=2;i++) {%>
+                                                        <tr>
+                                                            <th class='clickAuto'> 0
+                                                                <%=i%>
+                                                            </th>
+                                                            <td>管理员</td>
+                                                            <td>
+                                                                <button type="button" data-toggle="modal" data-target="#editRole" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="tooltip">
+                                                                    <i class="fa fa-pencil-square-o edit-icon"></i> 
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" data-toggle="tooltip">
+                                                                    <i class="ti-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <%}%> -->
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <div class="text-right">
+                                                                <ul class="pagination">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- .row （详情弹窗 添加角色）-->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- sample modal content -->
+                                    <div id="addRole" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                    <div class="modal-title">添加角色</div>
+                                                </div>
+                                                <div class="modal-body modalScroll form-group-b-0">
+                                                    <form data-toggle="validator" action="#" class="form-horizontal form-bordered">
+                                                        <div class="form-body">
+                                                            <div class="form-group">
+                                                                <label for='roleName' class="control-label col-md-3">添加角色</label>
+                                                                <div class="col-md-8">
+                                                                    <input id='roleName' type="text" placeholder="请输入角色名称" class="form-control" data-error="请输入角色名称" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button onclick="addRole()" type="submit" class="btn btn-info bra5">确定</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                            <!-- .row （修改权限弹窗）-->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div id="editRole" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                    <div class="modal-title">权限管理 > 管理员-角色权限</div>
+                                                </div>
+                                                <div id="modal_roleList" class="modal-body modalScroll">
+                                                    <!-- /.row -->
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                                                        <h4 class="panel-title">
+                                                                            <div class="checkbox checkbox-success checkbox-circle">
+                                                                                <input class="col-lg-2 " id="checkbox-<%=i%>" type="checkbox" value="系统管理">
+                                                                                <label class="col-lg-10" for="checkbox-<%=i%>"> 系统管理</label>
+                                                                            </div>
+                                                                            <a class="collapsed toggle-a font-bold" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> <span class="opacity0">系统管理</span> </a>
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div id="collapseTwo" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                        <%for(var i=1;i<5;i++){%>
+                                                                            <div class="row p-5-40" onclick="allotClinet(this)">
+                                                                                <div class="checkbox checkbox-success checkbox-circle">
+                                                                                    <input class="col-lg-2 " id="checkbox-<%=i%>" type="checkbox" value="李毅<%=i%>">
+                                                                                    <label class="col-lg-10" for="checkbox-<%=i%>"> 李毅<%=i%></label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <%}%>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .row -->
+                                                </div>
+                                                <div class="modal-footer text-center">
+                                                    <button type="button" class="btn btn-info bra5" onclick="editRoleSave()">确定</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+            </div>
+
+            <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_jurisd">
+            {{for}}
+            <tr>
+                <th>{{:#getIndex()+1}}</th>
+                <td>{{:name}}</td>
+                <td>
+                    <button onclick="showDialog(this)" roleId={{:roleId}} data-toggle="modal" data-target="#editRole" class="btn btn-sm  btn-icon btn-outline" data-toggle="tooltip">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                    <button onclick="deleteRole(this)" roleId={{:roleId}} type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip">
+                        <i class="ti-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {{/for}}
+        </script>
+        <script type="text/x-jsrender" id="J_tpl_selectRole">
+            {{for}}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-group" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo{{:#getIndex()}}">
+                                <h4 class="panel-title">
+                                    <div class="checkbox checkbox-success checkbox-circle">
+                                        <div onclick="ckALL(this)" permissionId={{:permissionId}}> {{if hasMenu}} <input class="col-lg-2 title" id="checkbox-{{:#getIndex()}}" checked type="checkbox" value="{{:name}}"> {{else}}
+                                            <input class="col-lg-2 title  lev1-title" id="checkbox-{{:#getIndex()}}" type="checkbox" value="{{:name}}"> {{/if}}
+                                            <label class="col-lg-2" for="checkbox-{{:#getIndex()}}"> {{:name}}</label>
+                                        </div>
+                                    </div>
+                                    <a class="collapsed toggle-a font-bold" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo{{:#getIndex()}}" aria-expanded="false" aria-controls="collapseTwo{{:#getIndex()}}"> <span class="opacity0">系统管理</span> </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo{{:#getIndex()}}" class="panel-collapse  collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                {{for children}}
+                                <div class="row p-5-40 item" onclick="ckItemTitle(this)" permissionId={{:permissionId}}>
+                                    <div class="checkbox checkbox-success checkbox-circle">
+                                        {{if hasMenu}}
+                                        <input class="col-lg-2 lev2-title" id="checkbox-l{{:#getIndex()}}" checked type="checkbox" value="{{:name}}"> {{else}}
+                                        <input class="col-lg-2 lev2-title" id="checkbox-l{{:#getIndex()}}" type="checkbox" value="{{:name}}"> {{/if}}
+                                        <label class="col-lg-10" for="checkbox-l{{:#getIndex()}}"> {{:name}}</label> {{for children}}
+                                        <div class="row p-5-40 item  lev2" onclick="ckItem(this)" permissionId={{:permissionId}}>
+                                            <div class="checkbox checkbox-success checkbox-circle">
+                                                {{if hasMenu}}
+                                                <input class="col-lg-2 1 lev2Input" checked type="checkbox" value="{{:name}}"> {{else}}
+                                                <input class="col-lg-2 inputAbsolute lev2Input" type="checkbox" value="{{:name}}"> {{/if}}
+                                                <label class="col-lg-10"> {{:name}}</label>
+                                            </div>
+                                        </div>
+                                        {{/for}}
+                                    </div>
+                                </div>
+                                {{/for}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/for}}
+        </script>
+
+        <script>
+            function navSlide() {
+                var tmpl = $.templates("#J_tpl_nav");
+                $.ajax({
+                    url: apiPath + 'api/menu/listAll',
+                    type: 'post',
+                    data: {},
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            var html = tmpl.render(data);
+                            // console.log(data)
+                            // $("#side-menu").html(html);
+                        }
+                    }
+                });
+            }
+        </script>
+        {{/for}}
+        </script>
+        <script>
+            window.onload = function() {
+                roleList();
+            }
+
+            //收集权限id
+            var permissionIds = [];
+
+            //弹窗权限数据
+            var roleId_update;
+
+            function showDialog(el) {
+                roleId_update = $(el).attr('roleid');
+                var tmpl = $.templates("#J_tpl_selectRole");
+                $.ajax({
+                    url: apiPath + 'api/role/selectRolePermission',
+                    type: 'post',
+                    data: {
+                        roleId: roleId_update
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            var html = tmpl.render(data);
+                            $("#modal_roleList").html(html);
+
+                            // 初始化时收集permissionId判断
+                            // console.log(init_permissionIds(data));
+                        }
+                    }
+                });
+            }
+
+            function init_permissionIds(data) {
+                for (var i in data) {
+                    if (data[i].hasMenu) {
+                        permissionIds.push(data[i].permissionId);
+                    }
+                    var children = data[i].children;
+                    for (var j in children) {
+                        if (children[j].hasMenu) {
+                            permissionIds.push(children[j].permissionId);
+                        }
+                    }
+                }
+                return permissionIds;
+            }
+
+            function ckALL(el) {
+                var lev0_id = $(el).attr('permissionid');
+                var ckStatus = $(el).find("input[type='checkbox']").is(':checked');
+                var inputs = $(el).parents('.panel-heading').next(".panel-collapse").find("input[type='checkbox']");
+                var lev1 = $(el).parents('.panel-heading').next(".panel-collapse");
+                var lev2 = $(el).parents('.panel-heading').next(".panel-collapse").find('.lev2');
+
+                if (ckStatus) {
+                    inputs.prop('checked', true);
+                    permissionIds.push(lev0_id);
+                    $(lev1).children('.row').each(function() {
+                        var lev1_id = $(this).attr("permissionid");
+                        permissionIds.push(lev1_id);
+                    })
+                    $(lev2).each(function() {
+                        var lev2_id = $(this).attr("permissionid");
+                        permissionIds.push(lev2_id);
+                    })
+                } else {
+                    inputs.prop('checked', false);
+                    for (var i in permissionIds) {
+                        if (permissionIds[i] == lev0_id) {
+                            permissionIds.splice(i, 1);
+                        }
+                    }
+                    $(lev1).children('.row').each(function() {
+                        var lev1_id = $(this).attr("permissionid");
+                        for (var i in permissionIds) {
+                            if (permissionIds[i] == lev1_id) {
+                                permissionIds.splice(i, 1);
+                            }
+                        }
+                    });
+                    $(lev2).each(function() {
+                        var lev2_id = $(this).attr("permissionid");
+                        for (var i in permissionIds) {
+                            if (permissionIds[i] == lev2_id) {
+                                permissionIds.splice(i, 1);
+                            }
+                        }
+                    })
+                }
+                console.log(permissionIds)
+            }
+
+            function ckItem(el) {
+                window.event.stopPropagation()
+                var permissionid_item = $(el).attr('permissionid');
+                var lev1Input = $(el).parents('.col-md-12').find('.lev1-title');
+                var lev2Input = $(el).find("input[type='checkbox']");
+                var ckStatus = $(el).find("input[type='checkbox']").is(':checked');
+                if (ckStatus) {
+                    permissionIds.push(permissionid_item);
+                    lev1Input.prop('checked', true);
+                    lev2Input.prop('checked', true);
+                } else {
+                    lev2Input.prop('checked', false);
+                    for (var i in permissionIds) {
+                        if (permissionIds[i] == permissionid_item) {
+                            permissionIds.splice(i, 1);
+                        }
+                    }
+                }
+                permissionIds = Array.from(new Set(permissionIds))
+                console.log(permissionIds)
+            }
+
+            function ckItemTitle(el) {
+                console.log('ckItemTitle')
+                window.event.stopPropagation()
+                var permissionid_title = $(el).attr('permissionid');
+                var titleInputStatus = $(el).find(".lev2-title").is(':checked');
+                var itemInputs = $(el).siblings('.item');
+                var lev2Input = $(el).find('.lev2Input');
+                var lev2 = $(el).find('.lev2');
+                if (titleInputStatus) {
+                    permissionIds.push(permissionid_title);
+                    $(lev2Input).each(function() {
+                        $(this).prop('checked', true);
+                    });
+                    $(lev2).each(function() {
+                        var lev2_id = $(this).attr("permissionid");
+                        for (var i in permissionIds) {
+                            permissionIds.push(lev2_id);
+                        }
+                    })
+                } else {
+                    $(lev2Input).each(function() {
+                        $(this).prop('checked', false);
+                    });
+                    for (var i in permissionIds) {
+                        if (permissionIds[i] == permissionid_title) {
+                            permissionIds.splice(i, 1);
+                        }
+                    }
+
+                    $(lev2).each(function() {
+                        var lev2_id = $(this).attr("permissionid");
+                        for (var i in permissionIds) {
+                            if (permissionIds[i] == lev2_id) {
+                                permissionIds.splice(i, 1);
+                            }
+                        }
+                    })
+                }
+                permissionIds = Array.from(new Set(permissionIds))
+                console.log(permissionIds)
+            }
+
+
+            //修改后保存权限
+            function editRoleSave() {
+                console.log(permissionIds)
+                if (permissionIds.length) {
+                    var perIds = permissionIds.join(',');
+                }
+                $.ajax({
+                    url: apiPath + 'api/role/saveMenu',
+                    type: 'post',
+                    data: {
+                        roleId: roleId_update,
+                        permissionIds: perIds
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            $('#editRole').modal('hide');
+                        }
+                    }
+                });
+            }
+
+            //角色列表
+            function roleList() {
+                var tmpl = $.templates("#J_tpl_jurisd");
+                $.ajax({
+                    url: apiPath + 'api/role/list',
+                    type: 'post',
+                    data: {},
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            var html = tmpl.render(data);
+                            $("#jurisd_table").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+                    }
+                });
+            }
+
+
+            //添加角色
+            function addRole() {
+                var roleName = $('#roleName').val();
+                $.ajax({
+                    url: apiPath + 'api/role/insert',
+                    type: 'post',
+                    data: {
+                        name: roleName,
+                        type: 2
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            $('#addRole').modal('hide');
+                            roleList();
+                        }
+                    }
+                });
+            }
+
+            //删除
+            function deleteRole(el) {
+                var roleId = $(el).attr('roleid');
+                swal({
+                    title: "你确定删除吗?",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: "取消",
+                    confirmButtonText: "确定"
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: apiPath + 'api/role/delete',
+                            type: 'post',
+                            data: {
+                                roleId: roleId
+                            },
+                            dataType: 'JSON',
+                            success: function(res) {
+                                if (res.code == 200) {
+                                    roleList();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        </script>

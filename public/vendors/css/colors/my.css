@@ -1,0 +1,439 @@
+li {
+    list-style: none;
+}
+
+.edit-icon,
+.delete-icon {
+    vertical-align: bottom !important;
+    transition: all .3s;
+    font-size: 16px !important;
+    padding-left: 4px !important;
+}
+
+.add-icon,
+.delete-icon {
+    padding-right: 6px;
+}
+
+.vai {
+    vertical-align: inherit;
+}
+
+.add-icon:hover,
+.delete-icon:hover {
+    color: #333 !important;
+}
+
+.fa:hover {
+    color: #333 !important;
+}
+
+.border-0 {
+    border: 0 !important;
+}
+
+.p-5-40 {
+    padding: 5px 40px !important;
+}
+
+.fw {
+    font-weight: bold !important;
+}
+
+.title-login {
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.tip {
+    color: #e6555a;
+    font-size: 12px;
+    padding-left: 12px;
+}
+
+.warn {
+    color: #e6555a;
+}
+
+.panel-body {
+    background: #F8F5F5 !important;
+}
+
+.logo-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    padding: 5px 0;
+}
+
+.toggle-a:hover,
+.toggle-a:focus {
+    color: #333;
+    opacity: 0.8;
+}
+
+
+/* 登录 */
+
+.login-box {
+    border-radius: 10px;
+    background: none;
+}
+
+.white-box {
+    border-radius: 10px;
+}
+
+.border {
+    border: 1px solid #dedede !important;
+}
+
+a:hover {
+    color: #03a9f3;
+}
+
+
+/* 模态框的位置 */
+
+.modal.fade.in {
+    top: 80px;
+}
+
+.modal-content {
+    border: 0 !important;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.sweet-alert p {
+    color: #e6555a;
+}
+
+thead {
+    background: #f5f8fa;
+    border-top: 1px solid #dedede;
+}
+
+.bg-title h4 {
+    font-size: 16px;
+}
+
+.slide-icon {
+    height: 14px;
+    width: 14px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.system-icon {
+    background: url('/vendors/images/xitong.png');
+}
+
+.client-icon {
+    height: 15px;
+    width: 16px;
+    background: url('/vendors/images/kehu.png');
+}
+
+.market-icon {
+    background: url('/vendors/images/xiaosou.png');
+}
+
+.data-icon {
+    height: 15px;
+    width: 15px;
+    background: url('/vendors/images/shuju.png');
+}
+
+#side-menu>li>a.active {
+    border: 0;
+}
+
+.login-box .form-control {
+    border: 0 !important;
+}
+
+.base-color {
+    color: #00c392 !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+#modal_roleList .panel-heading {
+    padding: 10px 20px !important;
+}
+
+#modal_roleList .panel-group {
+    margin-bottom: 0 !important;
+}
+
+.empty {
+    color: red !important;
+}
+
+#login .list-unstyled li {
+    font-size: 12px;
+}
+
+#login .form-group {
+    border-bottom: 0 !important;
+}
+
+.dd-item1 {
+    position: relative;
+}
+
+.followItem {
+    margin-bottom: 30px;
+}
+
+.followBtn {
+    position: absolute;
+    top: 4px;
+    left: 160px;
+}
+
+.followItem .dd-handle {
+    border: 0 !important;
+}
+
+.help-block {
+    margin-bottom: -10px;
+}
+
+.footable-sort-indicator {
+    display: none !important;
+}
+
+#loginform input {
+    padding-left: 6px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 16px;
+    background: #dedede;
+    padding: 9px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.search-wrap {
+    position: relative;
+}
+
+.search-wrap input {
+    padding-left: 5px;
+    padding-right: 36px;
+}
+
+.din {
+    display: none;
+}
+
+.my-error {
+    display: block;
+    color: #a94442;
+}
+
+ol,
+ul {
+    margin-bottom: 0;
+}
+
+.has-error .din {
+    display: block;
+}
+
+.has-error .form-control {
+    border-color: #fb9678 !important;
+    box-shadow: none !important;
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+.morris-default-style {
+    cursor: pointer;
+}
+
+.filter-option {
+    color: #333 !important;
+}
+
+.filter-option:hover {
+    color: #333 !important;
+}
+
+
+/* 模态框假滚动条 */
+
+
+/* t头部伸缩箭头  右边logo显示隐藏的样式 */
+
+.fix-sidebar .top-left-part {
+    background: #00c392;
+}
+
+.navbar-top-links>li>a:hover {
+    opacity: 0.8;
+    background: #4F5467;
+}
+
+.navbar-top-links>li>a:hover {
+    opacity: 0.8;
+    background: #4F5467;
+}
+
+.navbar-header,
+.sidebar {
+    background: #4f5568;
+}
+
+.navbar-top-links>li>a:focus {
+    opacity: 0.8;
+    background: #4F5467;
+}
+
+#side-menu>li>a.active {
+    font-weight: normal;
+}
+
+
+/* table 添加全选按钮 */
+
+#demo-foo-row-toggler .footable-toggle {
+    position: relative;
+}
+
+#demo-foo-row-toggler tbody .footable-first-column {
+    padding-left: 32px;
+}
+
+#demo-foo-row-toggler .footable-toggle::before {
+    position: absolute;
+    top: -14px;
+    left: -10px;
+}
+
+.td-1 {
+    position: relative;
+}
+
+.relative {
+    position: relative;
+}
+
+.ckbox {
+    position: absolute;
+    top: 18px;
+    left: 3px;
+    height: 14px;
+    width: 14px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.ckbox.active {
+    display: inline-block;
+    border: 1px solid #00c292;
+    background: #00c292;
+}
+
+.modalScroll {
+    max-height: 340px;
+    overflow-y: scroll;
+}
+
+.form-group-b-0 .form-group {
+    padding: 0;
+    border: 0;
+}
+
+.bg-title-f {
+    background: #F8F5F5;
+    padding: 5px 0;
+}
+
+.app-search a {
+    top: 10px;
+}
+
+.slide-icon {
+    font-size: 15px;
+}
+
+.opacity0 {
+    opacity: 0 !important;
+}
+
+.text-uppercase {
+    font-size: 14px !important;
+}
+
+.exit {
+    margin-top: 16px;
+    border-radius: 2px;
+    margin-right: 10px;
+}
+
+.form-control {
+    border-radius: 4px !important;
+    height: 34px !important;
+    border: 1px solid #dddfe4 !important;
+}
+
+.textareaH {
+    height: 70px !important;
+}
+
+.inputAbsolute {
+    left: 9px;
+    top: 0px;
+    position: absolute;
+    width: 107px;
+    display: inline-block;
+    height: 26px;
+}
+
+
+/* 日期插件 */
+
+.datepicker-days {
+    padding: 6px 20px;
+    cursor: pointer;
+}
+
+.datepicker-days tfoot th {
+    text-align: center;
+}
+
+.clockpicker-button:hover {
+    background: #dedede;
+    color: #000;
+}
+
+.show {
+    display: block !important;
+}
+
+
+/* #side-menu ul>li>a:hover {
+    color: #fff !important;
+}
+
+#side-menu ul>li>a.active {
+    color: #fb9678 !important;
+} */

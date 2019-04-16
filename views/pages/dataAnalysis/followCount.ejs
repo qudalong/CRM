@@ -1,0 +1,166 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">客户跟进次数</h4>
+                                    </div>
+                                </div>
+                                <!-- 过滤条件区 -->
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 m-t-10">
+                                    <div class="panel panel-default">
+                                        <div class="panel-wrapper  ">
+                                            <div class="panel-body">
+                                                <div class="m-t-10 collapseblebox ">
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h4 class="page-title">客户跟进次数</h4>
+                                                        <h5 id="totalFollowCount">210,00次</h5>
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                        <h4 class="page-title">今日跟进</h4>
+                                                        <h5 id="todayFollowCount">100次</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="white-box">
+                                        <table id="demo-foo-row-toggler" data-page-size="8" class="table-bordered table-hover table ">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan='6' class='text-center'>各直营店数据统计 2019-03-12</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="clickAuto">序号</th>
+                                                    <th data-sort-ignore="true">直营店</th>
+                                                    <th data-sort-ignore="true">销售员数量(个)</th>
+                                                    <th data-sort-ignore="true">客户数量(个)</th>
+                                                    <th data-sort-ignore="true">跟进次数(次)</th>
+                                                    <th data-sort-ignore="true">当日跟进次数(次)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="follow_table">
+                                                <!-- <tr>
+                                                    <td>1</td>
+                                                    <td>郭宇</td>
+                                                    <td>12</td>
+                                                    <td>1000,0</td>
+                                                </tr>
+                                                <tr class="warn">
+                                                    <td colspan='2' class='text-center'>总计</td>
+                                                    <td>24</td>
+                                                    <td>2000,0</td>
+                                                </tr> -->
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <div class="text-right">
+                                                            <ul class="pagination pagination-split">
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_follow">
+            {{for}}
+            <tr>
+                <td>{{:#getIndex()+1}}</td>
+                <td onclick="toFollowItemDesc(this)" organizationName={{:organizationName}} organizationId={{:organizationId}} class="base-color pointer">{{:organizationName}}</td>
+                <td>{{:salesmanNum}}</td>
+                <td>{{:customerNum}}</td>
+                <td>{{:contactNum}}</td>
+                <td>{{:addContactNum}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            var choiceDay = '';
+            window.onload = function() {
+                // var weekItemTime = localStorage.getItem("weekItemTime");
+                dayContactData(choiceDay);
+            }
+
+            function toFollowItemDesc(el) {
+                var organizationId = $(el).attr('organizationid');
+                var organizationName = $(el).attr('organizationname');
+                localStorage.setItem('toFollowItemDesc_organizationId', organizationId);
+                localStorage.setItem('toFollowItemDesc_organizationName', organizationName);
+                window.location.href = "/pages/dataAnalysis/followItemDesc";
+            }
+
+            //客户一周新增数据
+            function dayContactData(choiceDay) {
+                var tmpl = $.templates("#J_tpl_follow");
+                $.ajax({
+                    url: apiPath + 'api/analysis/dayContactData',
+                    type: 'post',
+                    data: {
+                        choiceDay: choiceDay
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result.organizationContactList;
+                            $("#totalFollowCount").html(res.result.countContact);
+                            $("#todayFollowCount").html(res.result.addCountContact);
+                            var html = tmpl.render(data);
+                            $("#follow_table").html(html);
+                            $('.clickAuto').trigger("click");
+                            var totalTd = ` <tr><td colspan='2' class='text-center'>总计</td>
+                                <td id="salesmanCount">12</td>
+                                <td id="clientCount">12</td>
+                                <td id="followCount">12</td>
+                                <td id="followTodayCount">12</td></tr>`;
+                            $("#follow_table").append(totalTd);
+
+                            // 结果总和计算
+                            var salesmanCount = 0,
+                                clientCount = 0,
+                                followCount = 0,
+                                followTodayCount = 0;
+                            for (const i in data) {
+                                salesmanCount += data[i].salesmanNum;
+                                clientCount += data[i].customerNum;
+                                followCount += data[i].contactNum;
+                                followTodayCount += data[i].addContactNum;
+                            }
+                            $('#salesmanCount').html(salesmanCount);
+                            $('#clientCount').html(clientCount);
+                            $('#followCount').html(followCount);
+                            $('#followTodayCount').html(followTodayCount);
+                        }
+                    }
+                });
+
+            }
+        </script>

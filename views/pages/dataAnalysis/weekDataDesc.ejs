@@ -1,0 +1,148 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid p-b-0">
+                                <div class="row bg-title">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">数据分析 > 客户一周新增数据</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="white-box">
+                                        <!-- 筛选开始 -->
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-wrapper  ">
+                                                    <div class="panel-body">
+                                                        <div class="collapseblebox ">
+                                                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                                <h4 class="page-title">业绩额：210,00</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 筛选结束 -->
+                                        <table id="demo-foo-row-toggler" data-page-size="5" class="table-bordered table-hover table ">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan='4' class='text-center'>南京直营店业绩统计 <span id="weekTime"></sapn></th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="clickAuto" data-sort-ignore="true">序号</th>
+                                                    <th data-sort-ignore="true">销售员</th>
+                                                    <th data-sort-ignore="true">订单数(单)</th>
+                                                    <th data-sort-ignore="true">业绩额(元)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="weekDesc_table">
+                                                <!-- <tr>
+                                                    <td>1</td>
+                                                    <td>郭宇</td>
+                                                    <td>12</td>
+                                                    <td>1000,0</td>
+                                                </tr>
+                                                <tr class="warn">
+                                                    <td colspan='2' class='text-center'>总计</td>
+                                                    <td>24</td>
+                                                    <td>2000,0</td>
+                                                </tr> -->
+                                            </tbody>
+                                             <!-- <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination pagination-split">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot> -->
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+
+                        </div>
+
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+         <script type="text/x-jsrender" id="J_tpl_weekDesc">
+            {{for}}
+            <tr>
+                <td>{{:#getIndex()+1}}</td>
+                <td>{{:name}}</td>
+                <td>{{:count}}</td>
+                <td>{{:money}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            window.onload = function() {
+                 var weekItemTime = localStorage.getItem("weekItemTime");
+                 $("#weekTime").text(weekItemTime);
+                dailyDetailData(weekItemTime);
+            }
+
+            //客户一周新增数据
+            function dailyDetailData(choiceDay) {
+                var tmpl = $.templates("#J_tpl_weekDesc");
+                // $.ajax({
+                //     url: apiPath + 'api/analysis/dailyDetailData',
+                //     type: 'post',
+                //     data: {
+                //         choiceDay: choiceDay
+                //     },
+                //     dataType: 'JSON',
+                //     success: function(res) {
+                //         if (res.code == 200 && res.result.length) {
+                //             var data = res.result;
+                //             var html = tmpl.render(data);
+                //             $("#weekDesc_table").html(html);
+                //             $('.clickAuto').trigger("click");
+                //         }
+                //     }
+                // });
+                 var html = tmpl.render(data);
+                $("#weekDesc_table").html(html);
+                var totalTd=` <tr><td colspan='2' class='text-center'>总计</td>
+                                <td>12</td>
+                                <td>1000,0</td></tr>`;
+                $("#weekDesc_table").append(totalTd);
+                $('.clickAuto').trigger("click");
+            }
+              data = [{
+                name: '张扬',
+                count: '10',
+                money: '10000'
+            }, {
+                name: '小明',
+                count: '20',
+                money: '20000'
+            }, {
+                name: '小明',
+                count: '20',
+                money: '20000'
+            }]
+        </script>

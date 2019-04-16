@@ -1,0 +1,125 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid p-b-0">
+                                <div class="row bg-title">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">客户跟进次数 </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="white-box">
+                                        <table id="demo-foo-row-toggler" data-page-size="5" class="table-bordered table-hover table ">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan='5' class='text-center'><span id="organizationName">上海直营店</sapn>客户跟进次数</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="clickAuto" data-sort-ignore="true">序号</th>
+                                                    <th data-sort-ignore="true">销售员</th>
+                                                    <th data-sort-ignore="true">客户数量(个)</th>
+                                                    <th data-sort-ignore="true">跟进次数(次)</th>
+                                                    <th data-sort-ignore="true">当日跟进(次)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="followDesc_table">
+                                                <!-- <tr>
+                                                    <td>1</td>
+                                                    <td>郭宇</td>
+                                                    <td>12</td>
+                                                    <td>12</td>
+                                                    <td>2</td>
+                                                </tr>
+                                                <tr class="warn">
+                                                    <td colspan='2' class='text-center'>总计</td>
+                                                    <td>24</td>
+                                                    <td>2000,0</td>
+                                                </tr> -->
+                                            </tbody>
+                                             <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination pagination-split">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+
+                        </div>
+
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+         <script type="text/x-jsrender" id="J_tpl_flowDesc">
+            {{for}}
+            <tr>
+                <td>{{:#getIndex()+1}}</td>
+                <td>{{:salesmanName}}</td>
+                <td>{{:customerNum}}</td>
+                <td>{{:contactNum}}</td>
+                <td>{{:addContactNum}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            window.onload = function() {
+                 var toFollowItemDesc_organizationId = localStorage.getItem("toFollowItemDesc_organizationId");
+                 var toFollowItemDesc_organizationName = localStorage.getItem("toFollowItemDesc_organizationName");
+                 $("#organizationName").html(toFollowItemDesc_organizationName);
+                organizationContactData('',toFollowItemDesc_organizationId);
+            }
+
+            //客户一周新增数据
+            function organizationContactData(choiceDay,organizationId) {
+                var tmpl = $.templates("#J_tpl_flowDesc");
+                $.ajax({
+                    url: apiPath + 'api/analysis/organizationContactData',
+                    type: 'post',
+                    data: {
+                        choiceDay: choiceDay,
+                        organizationId:organizationId
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 &&res.result.salesmanContactDetailList.length) {
+                            var data = res.result.salesmanContactDetailList;
+                            var html = tmpl.render(data);
+                            $("#followDesc_table").html(html);
+                            $('.clickAuto').trigger("click");
+                            var totalTd=` <tr><td colspan='2' class='text-center'>总计</td>
+                                            <td>12</td>
+                                            <td>12</td>
+                                            <td>100</td></tr>`;
+                            $("#weekDesc_table").append(totalTd);
+                        }
+                    }
+                });
+           
+            }
+             
+        </script>

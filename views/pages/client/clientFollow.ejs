@@ -1,0 +1,159 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">客户跟进</h4>
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <select id='followType' class="form-control">
+                                                                <option checked="checked">请选择跟进客户类型</option>
+                                                                <option value="1">今日需跟进</option>
+                                                                <option value="2">本周需跟进</option>
+                                                                <option value="3">本月需跟进</option>
+                                                                <option value="4">本周已跟进</option>
+                                                                <option value="5">本月已跟进</option>
+                                                                <option value="6">10天未跟进</option>
+                                                                <option value="7">成交客户</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <table id="demo-foo-row-toggler" data-limit-navigation="5" data-page-size="10" class="table toggle-circle table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class='clickAuto' data-toggle="true"> 客户名称 </th>
+                                                        <th data-sort-ignore="true"> 客户类型 </th>
+                                                        <th data-sort-ignore="true" data-hide="phone"> 手机号</th>
+                                                        <th data-hide="all"> 客户来源 </th>
+                                                        <th data-hide="all"> 客户星级 </th>
+                                                        <th data-hide="all"> 所在地区 </th>
+                                                        <th data-hide="all"> 所在公司 </th>
+                                                        <th data-hide="all"> 职位 </th>
+                                                        <th data-hide="all"> 邮箱 </th>
+                                                        <th data-hide="all"> 录入时间 </th>
+                                                        <th data-hide="all"> 下次关联日期 </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="follow_table"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination pagination-split">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+
+                                <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+                            </div>
+                        </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_follow">
+            {{for}}
+            <tr class="footable-even" style="display: table-row;">
+                <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>{{:customerName}}</td>
+                <td class="footable-visible">
+                    {{if customerType==1}}新建用户 {{else customerType==2}}潜在客户 {{else customerType==3}}成交客户 {{else customerType==4}}流失客户 {{else customerType==5}}其他 {{/if}}
+                </td>
+                <td class="footable-visible">{{:customerPhoneNumber}}
+                    <button onclick="showFollowList(this)" customerName={{:customerName}} customerId="{{:customerId}}" salesmanCustomerId={{:salesmanCustomerId}} class="btn btn-success btn-sm btn-outline btn-rounded m-l-10">
+                        <i class="fa fa-smile-o m-r-5"></i>跟进记录
+                    </button>
+                </td>
+                <td style="display: none;">
+                    {{if customerSource==1}}APP {{else customerSource==2}}PC云系统 {{else customerSource==3}}服务号 {{else customerSource==4}}小程序 {{else customerSource==5}}其他 {{/if}}
+                </td>
+                <td style="display: none;">
+                    {{if customerStar==1}}* {{else customerStar==2}}** {{else customerStar==3}}*** {{else customerStar==4}}**** {{else customerStar==5}}***** {{/if}}</td>
+                <td style="display: none;">{{:customerProvinceName}}{{:customerCityName}}</td>
+                <td style="display: none;">{{:customerCompany}}</td>
+                <td style="display: none;">{{:customerPosition}}</td>
+                <td style="display: none;">{{:customerEmail}}</td>
+                <td style="display: none;">{{:createTime}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            var followType = '';
+            window.onload = function() {
+                selectForContact(followType);
+            }
+
+            // 跟进记录
+            function showFollowList(el) {
+                var customerId_follow = $(el).attr('customerid');
+                var salesmanCustomerId_follow = $(el).attr('salesmancustomerid'); //移入公海时用
+                var customerName_follow = $(el).attr('customername');
+                localStorage.setItem("salesmanCustomerId_follow", salesmanCustomerId_follow);
+                localStorage.setItem("customerId_follow", customerId_follow);
+                localStorage.setItem("customerName_follow", customerName_follow);
+                window.location.href = "/pages/client/clientFollowItemDesc";
+            }
+
+
+            //客户跟进类型
+            $("#followType").change(function() {
+                followType = $(this).val();
+                if (followType == '请选择跟进客户类型') {
+                    return;
+                }
+                selectForContact(followType);
+            });
+
+            function selectForContact(followType) {
+                var tmpl = $.templates("#J_tpl_follow");
+                $.ajax({
+                    url: apiPath + 'api/customer/selectForContact',
+                    data: {
+                        key: followType, //1今日需跟进  2本周需跟进  3本月需跟进  4本周已跟进  5本月已跟进  6  10天未跟进  7成交客户
+                        page: 1,
+                        limit: 2000
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result.list;
+                            var html = tmpl.render(data);
+                            $("#follow_table").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+                    }
+                });
+            }
+        </script>

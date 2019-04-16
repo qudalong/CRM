@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<link href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css" rel="stylesheet">
+		<title>
+			<%= title %>
+		</title>
+
+		<script>
+			document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+		</script>
+		<style>
+			a {
+				color: #333;
+				text-decoration: none;
+			}
+			
+			.sitemap {
+				width: 1000px;
+				margin: 0 auto;
+				padding: 20px;
+				min-width: 320px;
+				font-family: "Microsoft YaHei UI";
+			}
+			
+			.sitemap h2 {
+				margin: 30px auto 40px;
+				color: #00cc99;
+				font-size: 30px;
+				text-align: center;
+				font-weight: normal;
+			}
+			
+			.sitemap dl {
+				padding-bottom: 20px;
+				margin-bottom: 20px;
+				border-bottom: 2px solid #ccc;
+			}
+			
+			.sitemap dt {
+				font-size: 22px;
+				font-weight: 400;
+				color: #00cc99;
+				margin-bottom: 10px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.sitemap dd {
+				line-height: 32px;
+				font-size: 16px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.sitemap dd small {
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<section class="main-bg">
+			<div class="sitemap">
+				<h2 class="text-center">CRM后台管理系统</h2>
+
+				<dl>
+					<dd>
+						<a href="/" target="_blank">首页
+							<small>template:index</small>
+						</a>
+					</dd>
+					<dd>
+						<a href="/pages/client/public" target="_blank">客户公海
+							<small>template:client/public</small>
+						</a>
+					</dd>	
+					<dd>
+						<a href="/pages/client/createClient" target="_blank">新建客户
+							<small>template:client/createClient</small>
+						</a>
+					</dd>
+					<dd>
+						<a href="/pages/marketMange/performance" target="_blank">销售员业绩
+							<small>template:marketMange/performance</small>
+						</a>
+					</dd>
+					<dd>
+						<a href="/pages/marketMange/myOrder" target="_blank">我的销售订单
+							<small>template:marketMange/myOrder</small>
+						</a>
+					</dd>
+				
+				</dl>
+				
+			</div>
+		</section>
+
+	</body>
+
+</html>

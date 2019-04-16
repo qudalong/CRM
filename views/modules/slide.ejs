@@ -1,0 +1,114 @@
+<!-- Left navbar-header -->
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-search hidden-sm hidden-md hidden-lg">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+						<button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
+					</span> </div>
+            </li>
+            <!-- <li>
+                <a href="tables.html" class="waves-effect active">
+                    <span class="hide-menu">登录<span class="fa arrow"></span>
+                    </span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li><a href="/pages/login/login">登录</a></li>
+                    <li><a href="/pages/login/register">注册</a></li>
+                    <li><a href="/pages/login/forgetPwd">忘记密码</a></li>
+                </ul>
+            </li> -->
+            <li> <a href="tables.html" class="waves-effect active"><i class="slide-icon system-icon"></i>
+					<span class="hide-menu">系统管理<span class="fa arrow"></span>
+					</span></a>
+                <ul class="nav nav-second-level">
+                    <li><a href="/pages/system/organization">精英堂组织架构</a></li>
+                    <li><a href="/pages/system/myOrganization">我的组织</a></li>
+                    <li><a href="/pages/system/jurisdiction">权限管理</a></li>
+                    <li>
+                        <a href="/pages/system/menuManage">菜单管理</a>
+                        <!-- <a href="/pages/system/menuManage" class="waves-effect">菜单管理</a>
+                        <ul class="nav nav-third-level">
+                            <li> <a href="javascript:void(0)">Third Level Item</a> </li>
+                        </ul> -->
+                    </li>
+                </ul>
+            </li>
+            <li> <a href="tables.html" class="waves-effect active"><i class="slide-icon client-icon"></i>
+					<span class="hide-menu">客户管理<span class="fa arrow"></span>
+					</span></a>
+                <ul class="nav nav-second-level">
+                    <li><a href="/pages/client/entering">录入查看</a></li>
+                    <li><a href="/pages/client/public">公海客户</a></li>
+                    <li><a href="/pages/client/myClient">我的客户</a></li>
+                    <li><a href="/pages/client/clientFollow">客户跟进</a></li>
+                </ul>
+            </li>
+            <li> <a href="tables.html" class="waves-effect active"><i class="slide-icon market-icon"></i>
+					<span class="hide-menu">销售管理<span class="fa arrow"></span>
+					</span></a>
+                <ul class="nav nav-second-level">
+                    <li><a href="/pages/marketMange/performance">销售员业绩</a></li>
+                    <li><a href="/pages/marketMange/myOrder">我的销售业绩</a></li>
+                </ul>
+            </li>
+            <li> <a href="tables.html" class="waves-effect active"><i class="slide-icon data-icon"></i>
+					<span class="hide-menu">数据分析<span class="fa arrow"></span>
+					</span></a>
+                <ul class="nav nav-second-level">
+                    <li><a href="/pages/dataAnalysis/weekAdd">客户一周新增数据</a></li>
+                    <li><a href="/pages/dataAnalysis/followCount">跟进次数</a></li>
+                    <li><a href="/pages/dataAnalysis/weekData">一周业绩统计</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Left navbar-header end -->
+<script type="text/x-jsrender" id="J_tpl_nav">
+    {{for}}
+    <li> <a onclick='navToggle(this)' permissionId={{:permissionId}} class="waves-effect navTitle"><i class="slide-icon icon-social-dribbble"></i>
+					<span class="hide-menu">{{:name}}<span class="fa arrow"></span>
+					</span></a>
+        <ul class="nav nav-second-level " aria-expanded="true">
+            {{for children}}
+            <li permissionId={{:permissionId}} onclick="choose(this)">
+                <a href="{{:url}}" class="waves-effect">{{:name}}</a>
+                <ul class="nav nav-third-level">
+                    {{for children}}
+                    <li> <a href="{{:url}}">{{:name}}</a> </li>
+                    {{/for}}
+                </ul>
+            </li>
+            {{/for}}
+        </ul>
+    </li>
+    {{/for}}
+</script>
+
+<script>
+    function navToggle(el) {
+        $(el).next('ul').toggleClass('show');
+    }
+    navSlide();
+
+    function navSlide() {
+        var tmpl = $.templates("#J_tpl_nav");
+        $.ajax({
+            url: apiPath + 'api/menu/listAll',
+            type: 'post',
+            data: {},
+            dataType: 'JSON',
+            success: function(res) {
+                if (res.code == 200 && res.result.length) {
+                    var data = res.result;
+                    var html = tmpl.render(data);
+                    $("#side-menu").html(html);
+                }
+            }
+        });
+    }
+</script>

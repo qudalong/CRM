@@ -1,0 +1,175 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">销售员业绩 </h4>
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <h3 class="box-title m-b-0">张扬 2019/4</h3>
+                                            <table class="table-bordered table-hover table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">日期</th>
+                                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">订单数量(个)</th>
+                                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">业绩金额(元)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id='perforDescTotal_table'>
+                                                    <tr>
+                                                        <td>2019/3</td>
+                                                        <td>16</td>
+                                                        <td>100000</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <h3 class="box-title m-b-0">客户订单详情</h3>
+                                            <table id="demo-foo-row-toggler" data-limit-navigation="5" data-page-size="5" class="table-bordered table-hover table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="clickAuto">客户姓名</th>
+                                                        <th>订单内容</th>
+                                                        <th>订单金额(元)</th>
+                                                        <th>成交日期</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id='perforDesc_table'>
+                                                    <!-- <tr>
+                                                        <td>张扬</td>
+                                                        <td>绩效训练营</td>
+                                                        <td>100</td>
+                                                        <td>2019/3/12 12:10:26</td>
+                                                    </tr> -->
+                                                </tbody>
+                                                <tfoot class="hide-if-no-paging">
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.container-fluid -->
+                            <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+                        </div>
+
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <!-- jQuery peity -->
+        <script src="/plugins/bower_components/tablesaw-master/dist/tablesaw.js"></script>
+        <script src="/plugins/bower_components/tablesaw-master/dist/tablesaw-init.js"></script>
+        <!--Style Switcher -->
+        <script src="/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+        <script type="text/x-jsrender" id="J_tpl_perforDescTotal">
+            {{for}}
+            <tr>
+                <td>所有</td>
+                <td>{{:salesmanOrderNum}}</td>
+                <td>{{:salesmanAchievementMoney}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script type="text/x-jsrender" id="J_tpl_perforDesc">
+            {{for}}
+            <tr>
+                <td>{{:customerName}}</td>
+                <td>{{:orderName}}</td>
+                <td>{{:orderPrice}}</td>
+                <td>{{:orderTime}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            window.onload = function() {
+                var salesmanId = localStorage.getItem("salesmanId");
+                var ym = localStorage.getItem("ym") || ''; //选择的年月
+                var d = localStorage.getItem("d") || ''; //选择天
+                // 业绩列表查询
+                listOrder(salesmanId, ym, d);
+            }
+
+            // 日期选择
+            jQuery('#selectDate').datepicker({
+                autoclose: true,
+                todayBtn: true,
+                todayHighlight: true
+            }).on('changeDate', gotoDate);
+
+
+            var ym = '',
+                d = '';
+
+            function gotoDate() {
+                var selectDate = $("#selectDate").val();
+                ym = selectDate.substring(0, 7);
+                d = selectDate.substring(8);
+                console.log(ym);
+                console.log(d);
+                performanceListAdmin(global_organizationId, ym, d);
+            }
+
+            //查询组织
+            function listOrder(salesmanId, yearMonth, day) {
+                $('.clickAuto').trigger("click");
+                var tmpl_total = $.templates("#J_tpl_perforDescTotal");
+                var tmpl = $.templates("#J_tpl_perforDesc");
+                $.ajax({
+                    url: apiPath + 'api/CrmSalesmanAchievement/listOrder',
+                    type: 'post',
+                    data: {
+                        salesmanId: salesmanId, //销售员Id（非必填）
+                        yearMonth: yearMonth, //年月 格式2019-04  字符串
+                        day: day //日 格式04 字符串
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result.crmSalesmanOrderVoList;
+                            var html_total = tmpl_total.render(res.result);
+                            var html = tmpl.render(data);
+                            $("#perforDescTotal_table").html(html_total);
+                            $("#perforDesc_table").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+                    }
+                });
+            }
+        </script>

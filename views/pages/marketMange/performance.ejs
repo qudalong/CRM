@@ -1,0 +1,252 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">销售业绩 </h4>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select id="oriSelect" class="form-control w100"></select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input id='selectDate' type="text" class="form-control" placeholder="年-月-日">
+                                                    </div>
+                                                    <!-- <div class="col-md-2">
+                                                        <input id='c_linktime' type="text" class="form-control clockpicker" value="09:30">
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <h3 class="box-title m-b-0">南京直营店 - 2019/3/1</h3>
+                                            <table class="tablesaw table-bordered table-hover table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>销售员人数</th>
+                                                        <th>订单数量(个)</th>
+                                                        <th>业绩金额(元)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id='perforTotal_table'>
+                                                    <!-- <tr>
+                                                        <td>4</td>
+                                                        <td>16</td>
+                                                        <td>100000</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <h3 class="box-title m-b-0">各销售员业绩</h3>
+                                            <table id="demo-foo-row-toggler" data-limit-navigation="5" data-page-size="5" class="table-bordered table-hover table">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="clickAuto">销售员</th>
+                                                        <th data-sort-ignore="true">订单数量(个)</th>
+                                                        <th data-sort-ignore="true">订单金额(元)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="perfor_table">
+                                                    <!-- <tr>
+                                                        <td onclick="toItemDesc(this)" class="base-color pointer">张扬</td>
+                                                        <td>100</td>
+                                                        <td>100,000</td>
+                                                    </tr> -->
+                                                </tbody>
+                                                <tfoot class="hide-if-no-paging">
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.container-fluid -->
+                            <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+                        </div>
+
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_perforDescTotal">
+            {{for}}
+            <tr>
+                <td>{{:salemansNum}}</td>
+                <td>{{:organizationOrderNum}}</td>
+                <td>{{:organizationAchievementMoney}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script type="text/x-jsrender" id="J_tpl_perfor">
+            {{for}}
+            <tr>
+                <td onclick="toItemDesc(this)" salesmanId={{:salesmanId}} class="base-color pointer">{{:salesmanName}}</td>
+                <td>{{:salesmanOrderNum}}</td>
+                <td>{{:salesmanAchievementMoney}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            var global_organizationId = '';
+            window.onload = function() {
+                selectTeamList();
+                performanceListAdminAll('', '', '');
+            }
+
+            // 日期选择
+            jQuery('#selectDate').datepicker({
+                autoclose: true,
+                todayBtn: true,
+                todayHighlight: true
+            }).on('changeDate', gotoDate);
+
+
+            var ym = '',
+                d = '';
+
+            function gotoDate() {
+                var selectDate = $("#selectDate").val();
+                ym = selectDate.substring(0, 7);
+                d = selectDate.substring(8);
+                console.log(ym);
+                console.log(d);
+                performanceListAdmin(global_organizationId, ym, d);
+            }
+
+            function toItemDesc(el) {
+                var salesmanId = $(el).attr('salesmanid');
+                localStorage.setItem("ym", ym); //选择的年月
+                localStorage.setItem("d", d); //选择天
+                localStorage.setItem("salesmanId", salesmanId);
+                window.location.href = "/pages/marketMange/itemDesc";
+            }
+
+            //添加用户选取角色id
+            $("#oriSelect").change(function() {
+                global_organizationId = $(this).val();
+                if (global_organizationId == "请选择组织") {
+                    return;
+                }
+                performanceListAdmin(global_organizationId, '', '');
+            })
+
+            //admin查询组织下人员(所有)
+            function performanceListAdminAll(organizationId, yearMonth, day) {
+                $('.clickAuto').trigger("click");
+                var tmpl = $.templates("#J_tpl_perfor");
+                $.ajax({
+                    url: apiPath + 'api/CrmSalesmanAchievement/listForSuperAdmin',
+                    type: 'post',
+                    data: {
+                        organizationId: organizationId,
+                        yearMonth: yearMonth, //年月 格式2019-04  字符串
+                        day: day //日 格式04 字符串
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            var allData = [];
+                            for (var i in data) {
+                                if (data[i].salesmanAchievementList.length) {
+                                    allData.push(data[i].salesmanAchievementList);
+                                }
+                            }
+                            var html = tmpl.render(allData);
+                            $("#perfor_table").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+
+                    }
+                });
+            }
+            //admin查询组织下人员
+            function performanceListAdmin(organizationId, yearMonth, day) {
+                $('.clickAuto').trigger("click");
+                var tmpl_total = $.templates("#J_tpl_perforDescTotal");
+                var tmpl = $.templates("#J_tpl_perfor");
+                $.ajax({
+                    url: apiPath + 'api/CrmSalesmanAchievement/listForSuperAdmin',
+                    type: 'post',
+                    data: {
+                        organizationId: organizationId,
+                        yearMonth: yearMonth, //年月 格式2019-04  字符串
+                        day: day //日 格式04 字符串
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result.salesmanAchievementList;
+                            var html_total = tmpl_total.render(res.result);
+                            var html = tmpl.render(data);
+                            $("#perforTotal_table").html(html_total);
+                            $("#perfor_table").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+                    }
+                });
+            }
+
+
+
+            function returnOptionHtml(list) {
+                var optionHtml = `<option checked="checked">请选择组织</option>`;
+                for (var i = 0; i < list.length; i++) {
+                    optionHtml += `<option value=${list[i].organizationId}>${list[i].organizationName}</option>`
+                }
+                return optionHtml;
+            }
+
+            //查询组织列表
+            function selectTeamList() {
+                $.ajax({
+                    url: apiPath + 'api/organization/list',
+                    type: 'post',
+                    data: {},
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            $("#oriSelect").html(returnOptionHtml(data));
+                        }
+                    }
+                });
+            }
+        </script>

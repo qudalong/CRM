@@ -1,0 +1,570 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title">客户公海</h4>
+                                    </div>
+                                </div>
+                                <!-- /row -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="white-box">
+                                            <!-- 筛选开始 -->
+                                            <div class="form-inline p-b-20">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <select id='customerType' class="form-control">
+                                                                <option checked="checked">请选择客户类型</option>
+                                                                <option value="1">新建用户</option>
+                                                                <option value="2">潜在客户</option>
+                                                                <option value="3">成交客户</option>
+                                                                <option value="4">流失客户</option>
+                                                                <option value="5">其他</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select id='customerStar' class="form-control">
+                                                                <option checked="checked">请选择客户星级</option>
+                                                                <option value="5">*****</option>
+                                                                <option value="4">****</option>
+                                                                <option value="3">***</option>
+                                                                <option value="2">**</option>
+                                                                <option value="1">*</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select id='customerSheng' class="form-control"></select>
+                                                        </div>
+                                                        <div class="form-group search-wrap">
+                                                            <input id="searchInput" type="text" placeholder="请输入客户姓名或手机号" class="form-control" autocomplete="off">
+                                                            <i onclick="listPublicCustomer()" class="ti-search search-icon"></i>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button onclick="allotCustomer()" data-toggle="modal" data-target="#allocationClient" class="btn btn-info btn-block btn-rounded">分配名额</button>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button data-toggle="modal" data-target="#addClient" class="btn btn-info btn-block btn-rounded">+添加客户</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 筛选结束 -->
+                                            <table data-page-size="10" data-limit-navigation="5" data-paging="true" id="demo-foo-row-toggler" class="table toggle-circle table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class='clickAuto' data-toggle="true"> 客户名称 </th>
+                                                        <th data-sort-ignore="true"> 客户类型 </th>
+                                                        <th data-sort-ignore="true" data-hide="phone"> 手机号 </th>
+                                                        <th data-hide="all"> 客户来源 </th>
+                                                        <th data-hide="all"> 客户星级 </th>
+                                                        <th data-hide="all"> 所在地区 </th>
+                                                        <th data-hide="all"> 所在公司 </th>
+                                                        <th data-hide="all"> 职位 </th>
+                                                        <th data-hide="all"> 邮箱 </th>
+                                                        <th data-hide="all"> 录入时间 </th>
+                                                        <th data-hide="all"> 下次关联日期 </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="my_table">
+                                                    <tr>
+                                                        <td class="td-1"><span class='ckbox' onclick="ckRow(this)"></span>郑州区</td>
+                                                        <td>销售</td>
+                                                        <td>18768871893</td>
+                                                        <td>法拉 <a data-toggle="modal" data-target="#responsive-modal"><i class="fa fa-pencil-square-o edit-icon"></i></a></td>
+                                                        <td>小程序</td>
+                                                        <td>*****</td>
+                                                        <td>北京</td>
+                                                        <td>电信</td>
+                                                        <td>高级管理</td>
+                                                        <td>163@.com</td>
+                                                        <td>2019/3/29 14:21:12</td>
+                                                        <td>2019/4/12 19:26:14</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="text-right">
+                                                                <ul class="pagination pagination-split m-t-30">
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <!-- .row （分配客户弹窗）-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- sample modal content -->
+                                        <div id="allocationClient" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                        <div class="modal-title">客户公海 > 分配客户</div>
+                                                    </div>
+                                                    <div class="modal-body modalScroll">
+                                                        <!-- /.row -->
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div id='allocation_table' class="panel-group" role="tablist" aria-multiselectable="true">
+                                                                    <div class="panel panel-default">
+                                                                        <div id="clientList" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                                            <%for(var i=1;i<5;i++){%>
+                                                                                <div class="row p-5-40" onclick="allotClinet(this)">
+                                                                                    <div class="checkbox checkbox-success checkbox-circle">
+                                                                                        <input class="col-lg-2 " id="checkbox-<%=i%>" type="checkbox" value="李毅<%=i%>">
+                                                                                        <%if(i==1){%>
+                                                                                            <label class="col-lg-10" for="checkbox-<%=i%>"> 李毅<%=i%><button class="btn btn-outline btn-success btn-rounded btn-xs m-l-5">管理员</button> </label>
+                                                                                            <%}else{%>
+                                                                                                <label class="col-lg-10" for="checkbox-<%=i%>"> 李毅<%=i%></label>
+                                                                                                <%}%>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <%}%>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- .row -->
+                                                    </div>
+                                                    <div class="modal-footer text-center">
+                                                        <button type="button" class="btn btn-info bra5" onclick="assignment()">确定</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <!-- .row （详情弹窗 添加客户）-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- sample modal content -->
+                                        <div id="addClient" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                        <div class="modal-title">添加客户</div>
+                                                    </div>
+                                                    <div class="modal-body modalScroll form-group-b-0">
+                                                        <!-- /row 新建客户开始-->
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <form data-toggle="validator1" class="form-horizontal form-bordered">
+                                                                    <div class="form-body">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">客户姓名</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id='c_name' type="text" placeholder="请输入客户姓名" class="form-control" data-error="请输入客户姓名" required>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">客户类型</label>
+                                                                            <div class="col-md-7">
+                                                                                <select id='customerType_add' class="form-control">
+                                                                                <option checked="checked">请选择客户类型</option>
+                                                                                <option value="1">新建用户</option>
+                                                                                <option value="2">潜在客户</option>
+                                                                                <option value="3">成交客户</option>
+                                                                                <option value="4">流失客户</option>
+                                                                                <option value="5">其他</option>
+                                                                            </select>
+                                                                            </div>
+                                                                            <div class="customerType_add help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">客户来源</label>
+                                                                            <div class="col-md-7">
+                                                                                <select id='customerSource_add' class="form-control">
+                                                                                <option checked="checked">请选择客户来源</option>
+                                                                                <option value="1">APP</option>
+                                                                                <option value="2">PC云系统</option>
+                                                                                <option value="3">服务号</option>
+                                                                                <option value="4">小程序</option>
+                                                                                <option value="5">其他</option>
+                                                                            </select>
+                                                                            </div>
+                                                                            <div class="customerSource_add help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">客户星级</label>
+                                                                            <div class="col-md-7">
+                                                                                <select id='customerStar_add' class="form-control">
+                                                                                <option checked="checked">请选择客户星级</option>
+                                                                                <option value="5">*****</option>
+                                                                                <option value="4">****</option>
+                                                                                <option value="3">***</option>
+                                                                                <option value="2">**</option>
+                                                                                <option value="1">*</option>
+                                                                            </select>
+                                                                            </div>
+                                                                            <div class="customerStar_add help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">所在城市</label>
+                                                                            <div class="col-md-3">
+                                                                                <select id='customerSheng_add' class="form-control"></select>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <select id='customerCity' class="form-control"></select>
+                                                                            </div>
+                                                                            <div class="customerSheng help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">所在公司</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id='c_company' type="text" placeholder="请输入客户公司名称" class="form-control" data-error="请输入客户公司名称" required>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">职位</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id='c_position' type="text" placeholder="请输入客户职位名称" class="form-control" data-error="请输入客户职位名称" required>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">联系方式</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id='c_tel' type="text" placeholder="请输入客户联系方式" class="form-control" data-error="请输入客户联系方式" required>
+                                                                            </div>
+                                                                            <div class="telMsg help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">邮箱</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id='c_email' type="email" placeholder="请输入客户邮箱" class="form-control" data-error="请输入客户邮箱" required>
+                                                                            </div>
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">下次联系时间</label>
+                                                                            <div class="col-md-3">
+                                                                                <input id='c_linkdate' type="text" class="form-control mydatepicker" placeholder="年/月/日" data-error="请选择下次联系时间" required>
+                                                                            </div>
+                                                                            <!-- <div class="col-md-3">
+                                                                                <input id='c_linktime' type="text" class="form-control clockpicker" value="09:30">
+                                                                            </div> -->
+                                                                            <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                        </div>
+                                                                        <div class="form-group text-center">
+                                                                            <!-- <button onclick="createClient()" type='submit' class="btn btn-info bra5">确定</button> -->
+                                                                            <button onclick="createClient()" type='button' class="btn btn-info bra5">确定</button>
+                                                                        </div>
+                                                                </form>
+                                                                <!-- /.row 新建客户结束-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /row 新建客户结束-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <footer class="footer text-center"> Copyright © 2012-2019 .精英堂. All Rights Reserved </footer>
+                        </div>
+                        <!-- /#page-wrapper -->
+            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script type="text/html" id="J_tpl_allocation">
+            {{for}}
+            <div class="form-group">
+                <div class="radio" onclick="allotClinet(this)" userId={{:userId}}>
+                    <input type="radio" name="client" id="out{{:#getIndex()+1}}" required="">
+                    <label for="out{{:#getIndex()+1}}"> {{:nickname}} </label>
+                </div>
+            </div>
+            {{/for}}
+        </script>
+        <script type="text/html" id="J_tpl_my">
+            {{for}}
+            <tr class="footable-even" style="display: table-row;">
+                <td class="footable-visible footable-first-column relative"><span class="footable-toggle"></span><span class="ckbox" customerId={{:customerId}} onclick="ckRow(this)"></span>{{:customerName}}</td>
+                <td class="footable-visible">
+                    {{if customerType==1}}新建用户 {{else customerType==2}}潜在客户 {{else customerType==3}}成交客户 {{else customerType==4}}流失客户 {{else customerType==5}}其他 {{/if}}
+                </td>
+                <td class="footable-visible">{{:customerPhoneNumber}}</td>
+                <td style="display: none;">
+                    {{if customerSource==1}}APP {{else customerSource==2}}PC云系统 {{else customerSource==3}}服务号 {{else customerSource==4}}小程序 {{else customerSource==5}}其他 {{/if}}
+                </td>
+                <td style="display: none;">
+                    {{if customerStar==1}}* {{else customerStar==2}}** {{else customerStar==3}}*** {{else customerStar==4}}**** {{else customerStar==5}}***** {{/if}}</td>
+                <td style="display: none;">{{:customerProvinceName}}{{:customerCityName}}</td>
+                <td style="display: none;">{{:customerCompany}}</td>
+                <td style="display: none;">{{:customerPosition}}</td>
+                <td style="display: none;">{{:customerEmail}}</td>
+                <td style="display: none;">{{:createTime}}</td>
+                <td style="display: none;">{{:nextContactTime}}</td>
+            </tr>
+            {{/for}}
+        </script>
+        <script>
+            var customerType = '';
+            window.onload = function() {
+                // 获取省份
+                cityList(1, '#customerSheng');
+                cityList(1, '#customerSheng_add');
+                // 获取公海客户列表
+                listPublicCustomer('', '', '', '', '');
+            }
+
+            //获取客户id列表
+            var customerIds = []; //顾客id
+
+            function ckRow(el) {
+                $(el).toggleClass('active');
+                var customerId = $(el).attr('customerid');
+                if (($(el).hasClass('active'))) {
+                    customerIds.push(customerId);
+                } else {
+                    for (var i in customerIds) {
+                        if (customerIds[i] == customerId) {
+                            customerIds.splice(i, 1);
+                        }
+                    }
+                }
+                console.log(customerIds.join(','));
+            }
+
+            //分配客户
+            var userId;
+
+            function allotClinet(el) {
+                userId = $(el).attr('userid');
+                console.log(userId);
+            }
+
+            //分配客户
+            function assignment() {
+                if (userId && customerIds.length) {
+                    var tmpl = $.templates("#J_tpl_allocation");
+                    $.ajax({
+                        url: apiPath + 'api/customer/assignment',
+                        type: 'post',
+                        data: {
+                            salesmanId: userId, //销售员ID
+                            customerIds: customerIds.join(',') || '' //客户id（用,拼接）
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                $('#allocationClient').modal('hide');
+                                console.log('分配成功！');
+                            }
+                        }
+                    });
+                } else {
+                    swal({
+                        title: "",
+                        text: "请选择客户或要分配的用户",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    console.log('请填写完整');
+                }
+            }
+
+            //获取分配客户列表
+            function allotCustomer() {
+                var tmpl = $.templates("#J_tpl_allocation");
+                $.ajax({
+                    url: apiPath + 'api/customer/goAssignment',
+                    type: 'post',
+                    data: {},
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            var html = tmpl.render(data);
+                            $("#clientList").html(html);
+                        }
+                    }
+                });
+            }
+
+            //客户类型
+            $("#customerType").change(function() {
+                customerType = $(this).val();
+                if (customerType == '请选择客户类型') {
+                    return;
+                }
+                listPublicCustomer('', '', customerType, '', '');
+            });
+
+            //客户星级
+            $("#customerStar").change(function() {
+                customerStar = $(this).val();
+                if (customerStar == '请选择客户星级') {
+                    return;
+                }
+                listPublicCustomer('', customerStar, '', '', '');
+            });
+            //省份
+            $("#customerSheng").change(function() {
+                var shengId = $(this).val();
+                if (shengId == '请选择城市') {
+                    return;
+                }
+                listPublicCustomer('', '', '', shengId);
+            });
+
+
+            // 添加客户时（保存客户）
+
+            //客户类型
+            $("#customerType_add").change(function() {
+                customerType_add = $(this).val();
+                commCkSelect(".customerType_add", customerType_add, '请选择客户类型');
+            });
+            //客户来源
+            $("#customerSource_add").change(function() {
+                customerSource_add = $(this).val();
+                commCkSelect(".customerSource_add", customerSource_add, '请选择客户来源');
+            });
+            //客户星级
+            $("#customerStar_add").change(function() {
+                customerStar_add = $(this).val();
+                commCkSelect(".customerStar_add", customerStar_add, '请选择客户星级');
+            });
+            //省
+            $("#customerSheng_add").change(function() {
+                customerSheng_add = $(this).val();
+                // 获取城市
+                cityList(customerSheng_add, '#customerCity');
+                commCkSelect(".customerSheng_add", customerSheng_add, '请选择省');
+            });
+            //城市
+            $("#customerCity").change(function() {
+                customerCity = $(this).val();
+                commCkSelect(".customerCity", customerCity, '请选择所在城市');
+            });
+
+
+
+
+            // 创建客户
+            function createClient() {
+                console.log(2)
+                    // commCkSelect(".customerType_add", customerType_add, '请选择客户类型');
+                    // commCkSelect(".customerSource_add", customerSource_add, '请选择客户来源');
+                    // commCkSelect(".customerStar_add", customerStar_add, '请选择客户星级');
+                    // commCkSelect(".customerSheng_add", customerSheng_add, '请选择所在城市');
+                var customerName = $("#c_name").val(),
+                    customerCompany = $("#c_company").val(),
+                    customerPosition = $("#c_position").val(),
+                    customerPhoneNumber = $("#c_tel").val(),
+                    customerEmail = $("#c_email").val(),
+                    startTime = $("#c_linkdate").val();
+                // var tel = $("#c_tel").val();
+                // commCkTel(tel);
+                console.log(22)
+                $.ajax({
+                    url: apiPath + 'api/customer/insertPublic',
+                    type: 'post',
+                    data: {
+                        customerName: customerName || '',
+                        customerType: customerType_add || '', //客户类型 1新建用户 2 潜在客户  3 成交客户 4流失客户  6其他
+                        customerSource: customerSource_add || '', //客户来源  1 APP 2 PC云系统 3服务号  4小程序 5 其他
+                        customerStar: customerStar_add || '', //客户星级
+                        customerProvince: customerSheng_add || '', //省Id
+                        customerCity: customerCity || '', //市Id
+                        customerCompany: customerCompany || '',
+                        customerPosition: customerPosition || '',
+                        customerPhoneNumber: customerPhoneNumber || '',
+                        customerEmail: customerEmail || '',
+                        startTime: startTime || ''
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            // $('#addClient').modal('hide');
+                        }
+                    }
+                });
+            }
+
+            function listPublicCustomer(keyword, customerStar, customerType, customerProvince) {
+                $('.clickAuto').trigger("click");
+                var tmpl = $.templates("#J_tpl_my");
+                var keyword = $("#searchInput").val();
+                $.ajax({
+                    url: apiPath + 'api/customer/listPublicCustomer',
+                    data: {
+                        keyword: keyword || '',
+                        customerStar: customerStar || '',
+                        customerType: customerType || '',
+                        customerProvince: customerProvince || '',
+                        page: '',
+                        limit: ''
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            var data = res.result.list;
+                            var html = tmpl.render(data);
+                            $("#my_table").html(html);
+                            $('.clickAuto').trigger("click");
+                        }
+                    }
+                });
+            }
+
+
+
+            //省市列表
+            function cityList(regionId, el) {
+                $.ajax({
+                    url: apiPath + 'api/region/list',
+                    type: 'post',
+                    data: {
+                        regionId: regionId //查询省不用传
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            $(el).html(returnOptionHtml(data));
+                        }
+                    }
+                });
+            }
+
+            function returnOptionHtml(list) {
+                var optionHtml = `<option checked="checked">请选择城市</option>`;
+                for (var i = 0; i < list.length; i++) {
+                    optionHtml += `<option value=${list[i].regionid}>${list[i].regionname}</option>`
+                }
+                return optionHtml;
+            }
+        </script>

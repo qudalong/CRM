@@ -1,0 +1,166 @@
+<% include ../../meta.ejs %>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>
+        <%=title%>
+    </title>
+    </head>
+
+    <body class="fix-sidebar">
+        <% include ../../modules/reload.ejs %>
+            <div id="wrapper">
+                <% include ../../modules/header.ejs %>
+                    <% include ../../modules/slide.ejs %>
+                        <!-- Page Content -->
+                        <div id="page-wrapper">
+                            <div class="container-fluid">
+                                <div class="row bg-title">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                        <h4 class="page-title"><a href="/pages/client/public">客户公海</a>>新建客户</h4>
+                                    </div>
+                                </div>
+                                <!-- /row 新建客户开始-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-info">
+                                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                                <div class="panel-body">
+                                                    <form action="#" class="form-horizontal form-bordered">
+                                                        <div class="form-body">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">客户姓名</label>
+                                                                <div class="col-md-7">
+                                                                    <input id='c_name' type="text" placeholder="请输入客户姓名" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">客户类型</label>
+                                                                <div id='c_type' class="col-md-7">
+                                                                    <select class="form-control">
+                                                                    <option value="">新客户</option>
+                                                                    <option value="">老客户</option>
+                                                                </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">客户来源</label>
+                                                                <div class="col-md-7">
+                                                                    <select id='c_form' class="form-control">
+                                                                        <option value="">APP</option>
+                                                                        <option value="">小程序 </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">客户星级</label>
+                                                                <div class="col-md-7">
+                                                                    <select id='c_level' class="form-control">
+                                                                        <option value="">*****</option>
+                                                                        <option value="">**</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">所在城市</label>
+                                                                <div class="col-md-7">
+                                                                    <select id='c_city' class="form-control">
+                                                                        <option value="">郑州</option>
+                                                                        <option value="">无锡</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">所在公司</label>
+                                                                <div class="col-md-7">
+                                                                    <input id='c_company' type="text" placeholder="请输入客户公司名称" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">职位</label>
+                                                                <div class="col-md-7">
+                                                                    <input id='c_position' type="text" placeholder="请输入客户职位名称" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">联系方式</label>
+                                                                <div class="col-md-7">
+                                                                    <input id='c_tel' type="text" placeholder="请输入客户联系方式" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">邮箱</label>
+                                                                <div class="col-md-7">
+                                                                    <input id='c_email' type="text" placeholder="请输入客户邮箱" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">下次联系时间</label>
+                                                                <div class="col-md-3">
+                                                                    <input id='c_linkdate' type="text" class="form-control mydatepicker" placeholder="mm/dd/yyyy">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <input id='c_linktime' type="text" class="form-control clockpicker" value="09:30">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group border-0">
+                                                                <div class="col-lg-2 col-sm-4 col-xs-12 col-md-offset-5">
+                                                                    <button class="btn btn-block btn-info btn-rounded" onclick="createClient()">确定</button>
+                                                                </div>
+                                                            </div>
+                                                    </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.row 新建客户结束-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /row 新建客户结束-->
+                                <!-- /#page-wrapper -->
+                            </div>
+    </body>
+
+    </html>
+    <% include ../../modules/footer.ejs %>
+        <script>
+            function createClient() {
+                var c_name = $("#c_name").val();
+                var c_type = $("#c_type").val();
+                var c_form = $("#c_form").val();
+                var c_level = $("#c_level").val();
+                var c_city = $("#c_city").val();
+                var c_company = $("#c_company").val();
+                var c_position = $("#c_position").val();
+                var c_tel = $("#c_tel").val();
+                var c_email = $("#c_email").val();
+                var c_linkdate = $("#c_linkdate").val();
+                var c_linktime = $("#c_linktime").val();
+                var reg_tel = /^1[34578]\d{9}$/;
+                var reg_email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+                if (!userName.trim()) {
+                    swal({
+                        title: "",
+                        text: "成员姓名不能为空！",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    return
+                } else if (!userTel.trim()) {
+                    swal({
+                        title: "",
+                        text: "成员手机号不能为空！",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    return
+                } else if (!reg_tel.test(userTel)) {
+                    swal({
+                        title: "",
+                        text: "请输入正确的手机号",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    return
+                }
+            }
+        </script>
