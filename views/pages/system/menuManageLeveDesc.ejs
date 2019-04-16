@@ -16,7 +16,7 @@
                             <div class="container-fluid">
                                 <div class="row bg-title">
                                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                        <h4 class="page-title"><a href="/pages/system/organization">精英堂</a> > 南京直营店</h4>
+                                        <h4 class="page-title">菜单管理</h4>
                                     </div>
                                     <!-- /.col-lg-12 -->
                                 </div>
@@ -27,19 +27,17 @@
                                             <table id="demo-foo-addrow2" data-page-size="5" class="table  table-hover toggle-circle">
                                                 <thead>
                                                     <tr>
-                                                        <th>成员姓名</th>
-                                                        <th>联系方式</th>
-                                                        <th class="min-width">操作</th>
+                                                        <th class='clickAuto'>序号</th>
+                                                        <th data-sort-ignore="true">菜单名称</th>
+                                                        <th data-sort-ignore="true">列表地址</th>
+                                                        <th data-sort-ignore="true" class="min-width">操作</th>
                                                     </tr>
                                                 </thead>
                                                 <div class="form-inline padding-bottom-15">
                                                     <div class="row">
                                                         <div class="col-sm-6 m-b-10">
                                                             <div class="form-group">
-                                                                <div class="form-group">
-                                                                    <input id="demo-input-search22" type="text" placeholder="Search" class="form-control" autocomplete="off">
-                                                                </div>
-                                                                <button class="btn btn-info btn-rounded model_img img-responsive" data-toggle="modal" data-target="#addUser"><i class="icon-user-follow add-icon"></i>添加成员</button>
+                                                                <button class="btn btn-info btn-rounded model_img img-responsive" data-toggle="modal" data-target="#addMenu">+新增</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -60,98 +58,36 @@
                                     </div>
                                 </div>
                                 <!-- /.row -->
-                                <!-- .row （添加成员弹窗）-->
+                                <!-- .row （添加菜单弹窗）-->
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <!-- sample modal content -->
-                                        <div id="addUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div id="addMenu" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
-                                                        <div class="modal-title">华北办 > 添加成员</div>
-                                                    </div>
-                                                    <div class="modal-body modalScroll">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group">
-                                                                <label for="inputUser" class="col-sm-2 control-label">用户名</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" id="inputUser" placeholder="请输入用户名">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputUserTel" class="col-sm-2 control-label">角色</label>
-                                                                <div class="col-sm-9">
-                                                                    <select class="selectpicker" data-style="form-control">
-                                            <option>角色</option>
-                                           
-                                        </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="pwd" class="col-sm-2 control-label">密码</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="passworld" class="form-control" id="pwd" placeholder="请输入密码">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="rePwd" class="col-sm-2 control-label">确认密码</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="passworld" class="form-control" id="rePwd" placeholder="请输入密码">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputName" class="col-sm-2 control-label">姓名</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" id="inputName" placeholder="请输入成员姓名">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputTel" class="col-sm-2 control-label">手机号</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" id="inputTel" placeholder="请输入成员手机号">
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer text-center">
-                                                        <button type="button" class="btn btn-info waves-effect" onclick="addUser()">确定</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-                                <!-- .row （编辑成员弹窗）-->
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <!-- sample modal content -->
-                                        <div id="editUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
-                                                        <div class="modal-title">华北办 > 编辑成员</div>
+                                                        <div class="modal-title"> 添加菜单</div>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form class="form-horizontal">
+                                                        <form data-toggle="validator" class="form-horizontal">
                                                             <div class="form-group">
-                                                                <label for="e_inputUserName" class="col-sm-2 control-label">姓名</label>
+                                                                <label for="m_name" class="col-sm-2 control-label">菜单名称</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" id="e_inputUserName" value="张浩1" placeholder="请输入成员姓名">
+                                                                    <input type="text" class="form-control" id="m_name" value="" placeholder="请输入菜单名称" data-error="请输入菜单名称" required>
                                                                 </div>
+                                                                <div class="help-block with-errors col-md-7 col-md-offset-2 din"></div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="e_inputUserTel" class="col-sm-2 control-label">手机号</label>
+                                                                <label for="m_url" class="col-sm-2 control-label">菜单地址</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" id="e_inputUserTel" value="18768774878" placeholder="请输入成员手机号">
+                                                                    <input type="text" class="form-control" id="m_url" value="" placeholder="请输入菜单地址" data-error="请输入菜单地址" required>
                                                                 </div>
+                                                                <div class="help-block with-errors col-md-7 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button onclick="addMenu()" type="submit" class="btn btn-info bra5">确定</button>
                                                             </div>
                                                         </form>
-                                                    </div>
-                                                    <div class="modal-footer text-center">
-                                                        <button type="button" class="btn btn-info waves-effect" onclick="editUser()">确定</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,6 +95,44 @@
                                     </div>
                                 </div>
                                 <!-- /.row -->
+                                <!-- .row （编辑菜单弹窗）-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div id="editMenu" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
+                                                        <div class="modal-title"> 编辑菜单</div>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form data-toggle="validator" class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label for="m_name" class="col-sm-2 control-label">菜单名称</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="m_e_name" value="" placeholder="请输入菜单名称" data-error="请输入菜单名称" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-7 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="m_url" class="col-sm-2 control-label">菜单地址</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="m_e_url" value="" placeholder="请输入菜单地址" data-error="请输入菜单地址" required>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-7 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button onclick="editMenuSave()" type="submit" class="btn btn-info bra5">确定</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+
                             </div>
                             <footer class="footer text-center"> Copyright ©2019 .精英堂. All Rights Reserved </footer>
                         </div>
@@ -168,6 +142,23 @@
 
     </html>
     <% include ../../modules/footer.ejs %>
+        <script type="text/x-jsrender" id="J_tpl_menu">
+            {{for}}
+            <tr>
+                <th>{{:#getIndex()+1}}</th>
+                <td onclick="toItemDesc(this)" permissionId={{:permissionId}} parentId=:{{:parentId}} menuName={{:name}} class="base-color pointer">{{:name}}</td>
+                <td>{{:url}}</td>
+                <td>
+                    <button onclick="editMenu(this)" data-toggle="modal" data-target="#editMenu" permissionId={{:permissionId}} parentId=:{{:parentId}} menuName={{:name}} menuUrl={{:url}} class="btn btn-sm  btn-icon btn-outline" data-toggle="tooltip">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                    <button onclick="deleteMenu(this)" type="button" permissionId={{:permissionId}} class="btn btn-sm btn-icon btn-pure btn-outline " data-toggle="tooltip">
+                        <i class="ti-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {{/for}}
+        </script>
         <script>
             window.onload = function() {
                 p_name = localStorage.getItem("p_name");
@@ -176,66 +167,82 @@
                 menuList();
             }
 
-            function addUser() {
-                var userName = $("#inputUserName").val();
-                var userTel = $("#inputUserTel").val();
-                var reg_tel = /^1[34578]\d{9}$/;
-                if (!userName.trim()) {
-                    swal({
-                        title: "",
-                        text: "成员姓名不能为空！",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                } else if (!userTel.trim()) {
-                    swal({
-                        title: "",
-                        text: "成员手机号不能为空！",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                } else if (!reg_tel.test(userTel)) {
-                    swal({
-                        title: "",
-                        text: "请输入正确的手机号",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                }
-                $('#addUser').modal('hide');
+            //调到详情
+            function toItemDesc(el) {
+                var p_name = $(el).attr('menuname');
+                var p_permissionId = $(el).attr('permissionid');
+                var p_parentId = $(el).attr('parentid');
+                window.location.href = "/pages/system/menuManageOper";
+                localStorage.setItem("p_name", p_name);
+                localStorage.setItem("p_permissionId", p_permissionId);
+                localStorage.setItem("p_parentId", p_parentId);
             }
 
-            function editUser() {
-                $('#editUser').modal('hide');
+            //添加菜单
+            function addMenu() {
+                var m_name = $("#m_name").val();
+                var m_url = $("#m_url").val();
+                if (m_name && m_url) {
+                    $.ajax({
+                        url: apiPath + 'api/menu/insert',
+                        type: 'post',
+                        data: {
+                            name: m_name,
+                            url: m_url,
+                            parentId: p_permissionId,
+                            permissionType: 2, //1 一级 2 二级 3按钮 4 其他
+                            icon: '',
+                            sort: ''
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                // 查询菜单列表
+                                menuList();
+                                $('#addMenu').modal('hide');
+                            }
+                        }
+                    });
+                }
+            }
+
+            //修改菜单时回显值
+            var permissionId;
+
+            function editMenu(el) {
+                permissionId = $(el).attr('permissionid');
+                var m_name = $(el).attr('menuname');
+                var m_url = $(el).attr('menuurl');
+                $("#m_e_name").val(m_name);
+                $("#m_e_url").val(m_url);
             }
 
             function editMenuSave() {
                 var m_e_name = $("#m_e_name").val();
                 var m_e_url = $("#m_e_url").val();
-                $.ajax({
-                    url: apiPath + 'api/menu/update',
-                    type: 'post',
-                    data: {
-                        permissionId: permissionId,
-                        name: m_e_name,
-                        url: m_e_url,
-                        parentId: p_permissionId,
-                        permissionType: 2, //1 一级 2 二级 3按钮 4 其他 
-                        icon: '',
-                        sort: ''
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            // 查询菜单列表 
-                            menuList();
-                            $('#editMenu').modal('hide');
+                if (m_e_name && m_e_url) {
+                    $.ajax({
+                        url: apiPath + 'api/menu/update',
+                        type: 'post',
+                        data: {
+                            permissionId: permissionId,
+                            name: m_e_name,
+                            url: m_e_url,
+                            parentId: p_permissionId,
+                            permissionType: 2, //1 一级 2 二级 3按钮 4 其他 
+                            icon: '',
+                            sort: ''
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                // 查询菜单列表 
+                                menuList();
+                                $('#editMenu').modal('hide');
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             //删除二级菜单 
@@ -268,7 +275,7 @@
 
             //菜单列表 
             function menuList() {
-                var tmpl = $.templates("#J_tpl_menuDesc");
+                var tmpl = $.templates("#J_tpl_menu");
                 $.ajax({
                     url: apiPath + 'api/menu/list',
                     type: 'post',
