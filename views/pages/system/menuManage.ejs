@@ -201,26 +201,28 @@
             function addMenu() {
                 var m_name = $("#m_name").val();
                 var m_url = $("#m_url").val();
-                $.ajax({
-                    url: apiPath + 'api/menu/insert',
-                    type: 'post',
-                    data: {
-                        name: m_name,
-                        url: m_url,
-                        parentId: '',
-                        permissionType: 1, //1 一级 2 二级 3按钮 4 其他
-                        icon: '',
-                        sort: ''
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            // 查询菜单列表
-                            menuList();
-                            $('#addMenu').modal('hide');
+                if (m_name && m_url) {
+                    $.ajax({
+                        url: apiPath + 'api/menu/insert',
+                        type: 'post',
+                        data: {
+                            name: m_name,
+                            url: m_url,
+                            parentId: '',
+                            permissionType: 1, //1 一级 2 二级 3按钮 4 其他
+                            icon: '',
+                            sort: ''
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                // 查询菜单列表
+                                menuList();
+                                $('#addMenu').modal('hide');
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             //修改菜单时回显值
@@ -239,27 +241,29 @@
             function editMenuSave() {
                 var m_e_name = $("#m_e_name").val();
                 var m_e_url = $("#m_e_url").val();
-                $.ajax({
-                    url: apiPath + 'api/menu/update',
-                    type: 'post',
-                    data: {
-                        permissionId: permissionId,
-                        name: m_e_name,
-                        url: m_e_url,
-                        parentId: 0,
-                        permissionType: 1, //1 目录 2 菜单 3按钮 4 其他
-                        icon: '',
-                        sort: ''
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            // 查询菜单列表
-                            menuList();
-                            $('#editMenu').modal('hide');
+                if (m_e_name && m_e_url) {
+                    $.ajax({
+                        url: apiPath + 'api/menu/update',
+                        type: 'post',
+                        data: {
+                            permissionId: permissionId,
+                            name: m_e_name,
+                            url: m_e_url,
+                            parentId: 0,
+                            permissionType: 1, //1 目录 2 菜单 3按钮 4 其他
+                            icon: '',
+                            sort: ''
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                // 查询菜单列表
+                                menuList();
+                                $('#editMenu').modal('hide');
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             //删除菜单
@@ -303,8 +307,6 @@
                     dataType: 'JSON',
                     success: function(res) {
                         if (res.code == 200 && res.result.length) {
-                            console.log('...............菜单列表...............')
-                            console.log(res)
                             var data = res.result;
                             var html = tmpl.render(data);
                             $("#menu_table").html(html);

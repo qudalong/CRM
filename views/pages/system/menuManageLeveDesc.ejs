@@ -278,8 +278,6 @@
                     dataType: 'JSON',
                     success: function(res) {
                         if (res.code == 200 && res.result.length) {
-                            console.log('...............菜单列表...............');
-                            console.log(res);
                             var data = res.result;
                             var html = tmpl.render(data);
                             $("#menu_tableDesc").html(html);

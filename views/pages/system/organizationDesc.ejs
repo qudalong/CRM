@@ -70,7 +70,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
-                                                        <div class="modal-title">华北办 > 添加成员</div>
+                                                        <div class="modal-title">添加成员</div>
                                                     </div>
                                                     <div class="modal-body modalScroll">
                                                         <form class="form-horizontal">
@@ -85,9 +85,6 @@
                                                                 <label for="inputUserTel" class="col-sm-2 control-label">角色</label>
                                                                 <div class="col-sm-9">
                                                                     <select id="roleSelect" class="form-control" data-error="请选择角色" required>
-                                                                    <option checked="checked">请选择角色</option>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">3</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="roleSelect help-block with-errors col-md-9 col-md-offset-2 din"></div>
@@ -139,7 +136,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color:#333">×</button>
-                                                        <div class="modal-title">华北办 > 编辑成员</div>
+                                                        <div class="modal-title">编辑成员</div>
                                                     </div>
                                                     <div class="modal-body">
                                                         <form class="form-horizontal">
@@ -179,7 +176,7 @@
             {{for}}
             <tr>
                 <th class='clickAuto'>{{:nickname}}
-                    <button class="btn btn-xs btn-info btn-outline btn-rounded m-l-5">管理员</button>
+                    <!-- <button class="btn btn-xs btn-info btn-outline btn-rounded m-l-5">管理员</button> -->
                 </th>
                 <td>{{:phoneNumber}}</td>
                 <td>
@@ -357,37 +354,5 @@
                         }
                     }
                 });
-            }
-
-            function addUser1() {
-                var userName = $("#inputUserName").val();
-                var userTel = $("#inputUserTel").val();
-                var reg_tel = /^1[34578]\d{9}$/;
-                if (!userName.trim()) {
-                    swal({
-                        title: "",
-                        text: "成员姓名不能为空！",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                } else if (!userTel.trim()) {
-                    swal({
-                        title: "",
-                        text: "成员手机号不能为空！",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                } else if (!reg_tel.test(userTel)) {
-                    swal({
-                        title: "",
-                        text: "请输入正确的手机号",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                }
-                $('#addUser').modal('hide');
             }
         </script>

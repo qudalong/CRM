@@ -461,21 +461,23 @@
             //添加角色
             function addRole() {
                 var roleName = $('#roleName').val();
-                $.ajax({
-                    url: apiPath + 'api/role/insert',
-                    type: 'post',
-                    data: {
-                        name: roleName,
-                        type: 2
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            $('#addRole').modal('hide');
-                            roleList();
+                if (roleName) {
+                    $.ajax({
+                        url: apiPath + 'api/role/insert',
+                        type: 'post',
+                        data: {
+                            name: roleName,
+                            type: 2
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                $('#addRole').modal('hide');
+                                roleList();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             //删除
