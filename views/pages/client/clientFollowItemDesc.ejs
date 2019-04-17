@@ -150,6 +150,7 @@
                 customerName_follow = localStorage.getItem("customerName_follow") || '';
                 // 编辑时客户姓名回显
                 $('#c_name').val(customerName_follow);
+                $('.clientName').html(customerName_follow);
                 followItemDesc(customerId_follow);
             }
 
@@ -229,12 +230,16 @@
                     },
                     dataType: 'JSON',
                     success: function(res) {
-                        if (res.code == 200 && res.result.length) {
+                        if (res.code == 200) {
                             var data = res.result;
                             var html = tmpl.render(data);
                             $("#followItem").html(html);
                             // 跟进次数和客户姓名
-                            $('#followCount').html(data.length);
+                            if (data.length) {
+                                $('#followCount').html(data.length);
+                            } else {
+                                $('#followCount').html('0');
+                            }
                             $('.clientName').html(customerName_follow);
                         }
                     }

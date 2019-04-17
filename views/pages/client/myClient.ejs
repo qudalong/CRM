@@ -16,7 +16,7 @@
                             <div class="container-fluid">
                                 <div class="row bg-title">
                                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                        <h4 class="page-title">客户公海</h4>
+                                        <h4 class="page-title">我的客户</h4>
                                     </div>
                                 </div>
                                 <!-- /row -->
@@ -61,11 +61,11 @@
                                                         <th data-hide="all"> 职位 </th>
                                                         <th data-hide="all"> 邮箱 </th>
                                                         <th data-hide="all"> 录入时间 </th>
-                                                        <th data-hide="all"> 下次关联日期 </th>
+                                                        <th data-hide="all"> 下次联系日期 </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="my_table">
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td class="td-1"><span class='ckbox' onclick="ckRow(this)"></span>郑州区</td>
                                                         <td>销售</td>
                                                         <td>18768871893</td>
@@ -77,7 +77,7 @@
                                                         <td>高级管理</td>
                                                         <td>163@.com</td>
                                                         <td>2019/3/29 14:21:12</td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -163,6 +163,7 @@
                                     </div>
                                 </div>
                                 <!-- /.row -->
+
                                 <!-- .row （详情弹窗 添加客户）-->
                                 <div class="row">
                                     <div class="col-md-4">
@@ -190,7 +191,7 @@
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-3">客户类型</label>
                                                                             <div class="col-md-7">
-                                                                                <select id='customerType' class="form-control">
+                                                                                <select id='customerType_add' class="form-control">
                                                                                 <option checked="checked">请选择客户类型</option>
                                                                                 <option value="1">新建用户</option>
                                                                                 <option value="2">潜在客户</option>
@@ -199,12 +200,12 @@
                                                                                 <option value="5">其他</option>
                                                                             </select>
                                                                             </div>
-                                                                            <div class="customerType help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                            <div class="customerType_add help-block with-errors col-md-7 col-md-offset-3 din"></div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-3">客户来源</label>
                                                                             <div class="col-md-7">
-                                                                                <select id='customerSource' class="form-control">
+                                                                                <select id='customerSource_add' class="form-control">
                                                                                 <option checked="checked">请选择客户来源</option>
                                                                                 <option value="1">APP</option>
                                                                                 <option value="2">PC云系统</option>
@@ -213,12 +214,12 @@
                                                                                 <option value="5">其他</option>
                                                                             </select>
                                                                             </div>
-                                                                            <div class="customerSource help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                            <div class="customerSource_add help-block with-errors col-md-7 col-md-offset-3 din"></div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-3">客户星级</label>
                                                                             <div class="col-md-7">
-                                                                                <select id='customerStar' class="form-control">
+                                                                                <select id='customerStar_add' class="form-control">
                                                                                 <option checked="checked">请选择客户星级</option>
                                                                                 <option value="5">*****</option>
                                                                                 <option value="4">****</option>
@@ -227,18 +228,17 @@
                                                                                 <option value="1">*</option>
                                                                             </select>
                                                                             </div>
-                                                                            <div class="customerStar help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                            <div class="customerStar_add help-block with-errors col-md-7 col-md-offset-3 din"></div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-3">所在城市</label>
-                                                                            <div class="col-md-7">
-                                                                                <select id='customerCity' class="form-control">
-                                                                                <option checked="checked">请选择所在城市</option>
-                                                                                <option value="1">郑州</option>
-                                                                                <option value="2">无锡</option>
-                                                                            </select>
+                                                                            <div class="col-md-3">
+                                                                                <select id='customerSheng_add' class="form-control"></select>
                                                                             </div>
-                                                                            <div class="customerCity help-block with-errors col-md-7 col-md-offset-3 din"></div>
+                                                                            <div class="col-md-4">
+                                                                                <select id='customerCity' class="form-control"></select>
+                                                                            </div>
+                                                                            <div class="customerSheng help-block with-errors col-md-7 col-md-offset-3 din"></div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-3">所在公司</label>
@@ -273,13 +273,14 @@
                                                                             <div class="col-md-3">
                                                                                 <input id='c_linkdate' type="text" class="form-control mydatepicker" placeholder="年/月/日" data-error="请选择下次联系时间" required>
                                                                             </div>
-                                                                            <div class="col-md-3">
+                                                                            <!-- <div class="col-md-3">
                                                                                 <input id='c_linktime' type="text" class="form-control clockpicker" value="09:30">
-                                                                            </div>
+                                                                            </div> -->
                                                                             <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
                                                                         </div>
                                                                         <div class="form-group text-center">
-                                                                            <button onclick="createClient()" type="submit" class="btn btn-info bra5">确定</button>
+                                                                            <button onclick="createClient()" type='submit' class="btn btn-info bra5">确定</button>
+                                                                            <!-- <button onclick="createClient()" type='button' class="btn btn-info bra5">确定</button> -->
                                                                         </div>
                                                                 </form>
                                                                 <!-- /.row 新建客户结束-->
@@ -329,6 +330,9 @@
         <script>
             var customerType = '';
             window.onload = function() {
+                // 获取省份
+                cityList(1, '#customerSheng');
+                cityList(1, '#customerSheng_add');
                 selectMyCustomer(customerType);
             }
 
@@ -365,10 +369,85 @@
                 });
             }
 
+            //客户类型
+            $("#customerType_add").change(function() {
+                customerType_add = $(this).val();
+                commCkSelect(".customerType_add", customerType_add, '请选择客户类型');
+            });
+            //客户来源
+            $("#customerSource_add").change(function() {
+                customerSource_add = $(this).val();
+                commCkSelect(".customerSource_add", customerSource_add, '请选择客户来源');
+            });
+            //客户星级
+            $("#customerStar_add").change(function() {
+                customerStar_add = $(this).val();
+                commCkSelect(".customerStar_add", customerStar_add, '请选择客户星级');
+            });
+            //省
+            $("#customerSheng_add").change(function() {
+                customerSheng_add = $(this).val();
+                // 获取城市
+                cityList(customerSheng_add, '#customerCity');
+                commCkSelect(".customerSheng_add", customerSheng_add, '请选择省');
+            });
+            //城市
+            $("#customerCity").change(function() {
+                customerCity = $(this).val();
+                commCkSelect(".customerCity", customerCity, '请选择所在城市');
+            });
+
+
             // 创建客户
             function createClient() {
-                console.log(9)
+                commCkSelect(".customerType_add", customerType_add, '请选择客户类型');
+                commCkSelect(".customerSource_add", customerSource_add, '请选择客户来源');
+                commCkSelect(".customerStar_add", customerStar_add, '请选择客户星级');
+                commCkSelect(".customerSheng_add", customerSheng_add, '请选择所在城市');
+                var customerName = $("#c_name").val(),
+                    customerCompany = $("#c_company").val(),
+                    customerPosition = $("#c_position").val(),
+                    customerPhoneNumber = $("#c_tel").val(),
+                    customerEmail = $("#c_email").val(),
+                    startTime = $("#c_linkdate").val();
+                var tel = $("#c_tel").val();
+                commCkTel(tel);
+                if (customerName && customerCompany && customerPosition && customerPhoneNumber && customerEmail && startTime) {
+                    $.ajax({
+                        url: apiPath + 'api/customer/insert',
+                        type: 'post',
+                        data: {
+                            customerName: customerName || '',
+                            customerType: customerType_add || '', //客户类型 1新建用户 2 潜在客户  3 成交客户 4流失客户  6其他
+                            customerSource: customerSource_add || '', //客户来源  1 APP 2 PC云系统 3服务号  4小程序 5 其他
+                            customerStar: customerStar_add || '', //客户星级
+                            customerProvince: customerSheng_add || '', //省Id
+                            customerCity: customerCity || '', //市Id
+                            customerCompany: customerCompany || '',
+                            customerPosition: customerPosition || '',
+                            customerPhoneNumber: customerPhoneNumber || '',
+                            customerEmail: customerEmail || '',
+                            startTime: startTime || ''
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                $('#addClient').modal('hide');
+                            }
+                            if (res.code == 500) {
+                                swal({
+                                    title: "",
+                                    text: res.desc,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                return false;
+                            }
+                        }
+                    });
+                }
             }
+
 
             //toggClass小方块
             function showCkbox() {
@@ -400,5 +479,31 @@
 
             function allotClinetData() {
                 $('#responsive-modal').modal('hide');
+            }
+
+            //省市列表
+            function cityList(regionId, el) {
+                $.ajax({
+                    url: apiPath + 'api/region/list',
+                    type: 'post',
+                    data: {
+                        regionId: regionId //查询省不用传
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200 && res.result.length) {
+                            var data = res.result;
+                            $(el).html(returnOptionHtml(data));
+                        }
+                    }
+                });
+            }
+
+            function returnOptionHtml(list) {
+                var optionHtml = `<option checked="checked">请选择城市</option>`;
+                for (var i = 0; i < list.length; i++) {
+                    optionHtml += `<option value=${list[i].regionid}>${list[i].regionname}</option>`
+                }
+                return optionHtml;
             }
         </script>

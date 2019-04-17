@@ -38,9 +38,10 @@
     // 日期区间选择
     $.fn.datepicker.defaults.format = "yyyy-mm-dd";
     $.fn.datepicker.defaults.defaultViewDate = "today";
+    //$('.mydatepicker').datepicker('setDate', new Date());
     jQuery('.mydatepicker').datepicker({
         autoclose: true,
-        // clearBtn: true,
+        defaultDate: new Date(),
         todayBtn: true,
         todayHighlight: true
     });

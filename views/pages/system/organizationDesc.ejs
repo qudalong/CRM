@@ -152,11 +152,26 @@
                                                                     <input type="text" class="form-control" id="e_userTel" value="18768774878" placeholder="请输入成员手机号">
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label for="e_userTel" class="col-sm-2 control-label">角色</label>
+                                                                <div class="col-sm-9">
+                                                                    <select id="e_roleSelect" class="form-control"></select>
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="e_userTel" class="col-sm-2 control-label">密码</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" id="e_pwd" value="" placeholder="请输入密码">
+                                                                </div>
+                                                                <div class="help-block with-errors col-md-9 col-md-offset-2 din"></div>
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="button" class="btn btn-info bra5" onclick="editUserSave()">确定</button>
+                                                            </div>
                                                         </form>
                                                     </div>
-                                                    <div class="modal-footer text-center">
-                                                        <button type="button" class="btn btn-info bra5" onclick="editUserSave()">确定</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -209,7 +224,13 @@
             $("#roleSelect").change(function() {
                 global_roid_add = $(this).val();
                 commCkSelect(".roleSelect", global_roid_add, '请选择角色');
-            })
+            });
+
+            //编辑时的角色id
+            $("#e_roleSelect").change(function() {
+                e_roleSelect = $(this).val();
+                commCkSelect(".e_roleSelect", e_roleSelect, '请选择角色');
+            });
 
             function selectUnderRole() {
                 $.ajax({
@@ -221,6 +242,7 @@
                         if (res.code == 200 && res.result.length) {
                             var data = res.result;
                             $("#roleSelect").html(returnOptionHtml(data));
+                            $("#e_roleSelect").html(returnOptionHtml(data));
                         }
                     }
                 });
@@ -233,17 +255,44 @@
                 }
                 return optionHtml;
             }
+
             //修改获取全局用户id
-            var userId_edit, nickName_edit, phoneNumber_edit;
+            var roleId_edit, userId_edit, nickName_edit, phoneNumber_edit;
 
             function editUser(el) {
+                roleId_edit = $(el).attr("roleid");
                 userId_edit = $(el).attr("userid");
                 nickName_edit = $(el).attr('nickname');
                 phoneNumber_edit = $(el).attr('phonenumber');
                 $("#e_userName").val(nickName_edit);
                 $("#e_userTel").val(phoneNumber_edit);
             }
-
+            //编辑用户保存
+            function editUserSave() {
+                commCkSelect(".e_roleSelect", e_roleSelect, '请选择角色');
+                var e_pwd = b64_md5($("#e_pwd").val());
+                var e_userName = $("#e_userName").val();
+                var e_userTel = $("#e_userTel").val();
+                $.ajax({
+                    url: apiPath + 'api/crmUser/update',
+                    type: 'post',
+                    data: {
+                        userId: userId_edit,
+                        password: e_pwd,
+                        nickname: e_userName,
+                        phoneNumber: e_userTel,
+                        organizationId: p_organizationId,
+                        roleId: e_roleSelect
+                    },
+                    dataType: 'JSON',
+                    success: function(res) {
+                        if (res.code == 200) {
+                            $('#editUser').modal('hide');
+                            myOrganList(p_organizationId, '');
+                        }
+                    }
+                });
+            }
 
             //删除用户
             function deleteUser(el) {
@@ -295,31 +344,7 @@
                 });
             }
 
-            //编辑用户保存
-            function editUserSave() {
-                var MD5pwd = b64_md5("123");
-                var e_userName = $("#e_userName").val();
-                var e_userTel = $("#e_userTel").val();
-                $.ajax({
-                    url: apiPath + 'api/crmUser/update',
-                    type: 'post',
-                    data: {
-                        userId: userId_edit,
-                        password: MD5pwd,
-                        nickname: e_userName,
-                        phoneNumber: e_userTel,
-                        organizationId: p_organizationId,
-                        roleId: global_roid_add
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            $('#editUser').modal('hide');
-                            myOrganList(p_organizationId, '');
-                        }
-                    }
-                });
-            }
+
 
             // 手机号验证
             $("#inputTel").blur(function() {
