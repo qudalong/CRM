@@ -16,7 +16,7 @@
                             <div class="container-fluid">
                                 <div class="row bg-title">
                                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                        <h4 class="page-title"><a href="/pages/system/organization">精英堂</a> > 南京直营店</h4>
+                                        <h4 class="page-title"><a href="/pages/system/organization">我的组织</a></h4>
                                     </div>
                                 </div>
                                 <!-- /row -->
@@ -27,11 +27,12 @@
                                             <div class="form-inline p-b-20">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <input id="demo-input-search2" type="text" placeholder="搜索" class="form-control" autocomplete="off">
+                                                        <div class="form-group search-wrap">
+                                                            <input id="searchInput" type="text" placeholder="搜索" class="form-control" autocomplete="off">
+                                                            <i id="searchInputBtn" class="ti-search search-icon"></i>
                                                         </div>
                                                         <div class="form-group">
-                                                            <button data-toggle="modal" data-target="#addUser" class="btn btn-info btn-block btn-rounded">+添加成员</button>
+                                                            <button onclick="showAddUserDialog()" data-toggle="modal" data-target="#addUser" class="btn btn-info btn-block btn-rounded">+添加成员</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -213,7 +214,7 @@
         </script>
         <script>
             window.onload = function() {
-                myOrganList();
+                myOrganList('', '');
                 // 查询角色列表
                 selectUnderRole();
             }
@@ -225,6 +226,11 @@
                 global_roid_add = $(this).val();
                 commCkSelect(".roleSelect", global_roid_add, '请选择角色');
                 console.log(global_roid_add);
+            })
+
+            $("#searchInputBtn").on('click', function() {
+                var searKey = $('#searchInput').val() || '';
+                myOrganList('', searKey);
             })
 
             function selectUnderRole() {
@@ -280,7 +286,7 @@
                     success: function(res) {
                         if (res.code == 200) {
                             $('#editUser').modal('hide');
-                            myOrganList();
+                            myOrganList('', '');
                         }
                     }
                 });
@@ -305,7 +311,7 @@
                             dataType: 'JSON',
                             success: function(res) {
                                 if (res.code == 200) {
-                                    myOrganList();
+                                    myOrganList('', '');
                                 }
                             }
                         });
@@ -313,14 +319,14 @@
                 });
             }
             //我的组织列表
-            function myOrganList() {
+            function myOrganList(organizationId, keyword) {
                 var tmpl = $.templates("#J_tpl_myOri");
                 $.ajax({
                     url: apiPath + 'api/crmUser/list',
                     type: 'post',
                     data: {
-                        organizationId: '',
-                        keyword: ''
+                        organizationId: organizationId,
+                        keyword: keyword
                     },
                     dataType: 'JSON',
                     success: function(res) {
@@ -342,61 +348,38 @@
                 commCkTel(tel);
             });
 
-            function addUser() {
-                commCkSelect(".roleSelect", global_roid_add, '请选择角色');
-                var tel = $("#inputTel").val();
-                commCkTel(tel);
-                var MD5pwd = b64_md5("123");
-                $.ajax({
-                    url: apiPath + 'api/crmUser/insert',
-                    type: 'post',
-                    data: {
-                        username: 'admin',
-                        password: MD5pwd,
-                        nickname: '刘全全',
-                        phoneNumber: '18768871897',
-                        organizationId: global_organizationId_add,
-                        roleId: global_roid_add
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            $('#addUser').modal('hide');
-                            myOrganList();
-                        }
-                    }
-                });
+            function showAddUserDialog() {
+                $('#inputUser').val('');
+                $('#pwd').val('');
             }
 
-            function addUser1() {
-                var userName = $("#inputUserName").val();
-                var userTel = $("#inputUserTel").val();
-                var reg_tel = /^1[34578]\d{9}$/;
-                if (!userName.trim()) {
-                    swal({
-                        title: "",
-                        text: "成员姓名不能为空！",
-                        timer: 2000,
-                        showConfirmButton: false
+            function addUser() {
+                var inputUser = $('#inputUser').val();
+                var MD5pwd = b64_md5($('#pwd').val());
+                var inputName = $('#inputName').val();
+                var inputTel = $('#inputTel').val();
+                commCkSelect(".roleSelect", global_roid_add, '请选择角色');
+                commCkTel(inputTel);
+                if (inputUser && MD5pwd && inputName && inputTel) {
+                    $.ajax({
+                        url: apiPath + 'api/crmUser/insert',
+                        type: 'post',
+                        data: {
+                            username: inputUser,
+                            password: MD5pwd,
+                            nickname: inputName,
+                            phoneNumber: inputTel,
+                            organizationId: global_organizationId_add,
+                            roleId: global_roid_add
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                $('#addUser').modal('hide');
+                                myOrganList('', '');
+                            }
+                        }
                     });
-                    return
-                } else if (!userTel.trim()) {
-                    swal({
-                        title: "",
-                        text: "成员手机号不能为空！",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
-                } else if (!reg_tel.test(userTel)) {
-                    swal({
-                        title: "",
-                        text: "请输入正确的手机号",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    return
                 }
-                $('#addUser').modal('hide');
             }
         </script>

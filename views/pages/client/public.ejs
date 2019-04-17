@@ -81,7 +81,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="my_table">
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td class="td-1"><span class='ckbox' onclick="ckRow(this)"></span>郑州区</td>
                                                         <td>销售</td>
                                                         <td>18768871893</td>
@@ -94,7 +94,7 @@
                                                         <td>163@.com</td>
                                                         <td>2019/3/29 14:21:12</td>
                                                         <td>2019/4/12 19:26:14</td>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -172,7 +172,7 @@
                                                         <!-- /row 新建客户开始-->
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <form data-toggle="validator1" class="form-horizontal form-bordered">
+                                                                <form data-toggle="validator" class="form-horizontal form-bordered">
                                                                     <div class="form-body">
                                                                         <div class="form-group">
                                                                             <label class="control-label col-md-3">客户姓名</label>
@@ -272,8 +272,8 @@
                                                                             <div class="help-block with-errors col-md-7 col-md-offset-3 din"></div>
                                                                         </div>
                                                                         <div class="form-group text-center">
-                                                                            <!-- <button onclick="createClient()" type='submit' class="btn btn-info bra5">确定</button> -->
-                                                                            <button onclick="createClient()" type='button' class="btn btn-info bra5">确定</button>
+                                                                            <button onclick="createClient()" type='submit' class="btn btn-info bra5">确定</button>
+                                                                            <!-- <button onclick="createClient()" type='button' class="btn btn-info bra5">确定</button> -->
                                                                         </div>
                                                                 </form>
                                                                 <!-- /.row 新建客户结束-->
@@ -380,7 +380,6 @@
                         success: function(res) {
                             if (res.code == 200) {
                                 $('#allocationClient').modal('hide');
-                                console.log('分配成功！');
                             }
                         }
                     });
@@ -391,7 +390,6 @@
                         timer: 2000,
                         showConfirmButton: false
                     });
-                    console.log('请填写完整');
                 }
             }
 
@@ -475,43 +473,52 @@
 
             // 创建客户
             function createClient() {
-                console.log(2)
-                    // commCkSelect(".customerType_add", customerType_add, '请选择客户类型');
-                    // commCkSelect(".customerSource_add", customerSource_add, '请选择客户来源');
-                    // commCkSelect(".customerStar_add", customerStar_add, '请选择客户星级');
-                    // commCkSelect(".customerSheng_add", customerSheng_add, '请选择所在城市');
+                commCkSelect(".customerType_add", customerType_add, '请选择客户类型');
+                commCkSelect(".customerSource_add", customerSource_add, '请选择客户来源');
+                commCkSelect(".customerStar_add", customerStar_add, '请选择客户星级');
+                commCkSelect(".customerSheng_add", customerSheng_add, '请选择所在城市');
                 var customerName = $("#c_name").val(),
                     customerCompany = $("#c_company").val(),
                     customerPosition = $("#c_position").val(),
                     customerPhoneNumber = $("#c_tel").val(),
                     customerEmail = $("#c_email").val(),
                     startTime = $("#c_linkdate").val();
-                // var tel = $("#c_tel").val();
-                // commCkTel(tel);
-                console.log(22)
-                $.ajax({
-                    url: apiPath + 'api/customer/insertPublic',
-                    type: 'post',
-                    data: {
-                        customerName: customerName || '',
-                        customerType: customerType_add || '', //客户类型 1新建用户 2 潜在客户  3 成交客户 4流失客户  6其他
-                        customerSource: customerSource_add || '', //客户来源  1 APP 2 PC云系统 3服务号  4小程序 5 其他
-                        customerStar: customerStar_add || '', //客户星级
-                        customerProvince: customerSheng_add || '', //省Id
-                        customerCity: customerCity || '', //市Id
-                        customerCompany: customerCompany || '',
-                        customerPosition: customerPosition || '',
-                        customerPhoneNumber: customerPhoneNumber || '',
-                        customerEmail: customerEmail || '',
-                        startTime: startTime || ''
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            // $('#addClient').modal('hide');
+                var tel = $("#c_tel").val();
+                commCkTel(tel);
+                if (customerName && customerCompany && customerPosition && customerPhoneNumber && customerEmail && startTime) {
+                    $.ajax({
+                        url: apiPath + 'api/customer/insertPublic',
+                        type: 'post',
+                        data: {
+                            customerName: customerName || '',
+                            customerType: customerType_add || '', //客户类型 1新建用户 2 潜在客户  3 成交客户 4流失客户  6其他
+                            customerSource: customerSource_add || '', //客户来源  1 APP 2 PC云系统 3服务号  4小程序 5 其他
+                            customerStar: customerStar_add || '', //客户星级
+                            customerProvince: customerSheng_add || '', //省Id
+                            customerCity: customerCity || '', //市Id
+                            customerCompany: customerCompany || '',
+                            customerPosition: customerPosition || '',
+                            customerPhoneNumber: customerPhoneNumber || '',
+                            customerEmail: customerEmail || '',
+                            startTime: startTime || ''
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                $('#addClient').modal('hide');
+                            }
+                            if (res.code == 500) {
+                                swal({
+                                    title: "",
+                                    text: res.desc,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                return false;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             function listPublicCustomer(keyword, customerStar, customerType, customerProvince) {

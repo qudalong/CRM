@@ -344,6 +344,7 @@ ul {
     width: 14px;
     border: 1px solid #ccc;
     background: #fff;
+    border-radius: 2px;
 }
 
 .ckbox.active {

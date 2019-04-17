@@ -73,7 +73,7 @@
                                                         <div class="modal-title">添加成员</div>
                                                     </div>
                                                     <div class="modal-body modalScroll">
-                                                        <form class="form-horizontal">
+                                                        <form data-toggle="validator" class="form-horizontal">
                                                             <div class="form-group">
                                                                 <label for="inputUser" class="col-sm-2 control-label">用户名</label>
                                                                 <div class="col-sm-9">
@@ -118,7 +118,7 @@
                                                                 <div class="telMsg help-block with-errors col-md-9 col-md-offset-2 din"></div>
                                                             </div>
                                                             <div class="form-group text-center">
-                                                                <button onclick="addUser()" type="button" class="btn btn-info bra5">确定</button>
+                                                                <button onclick="addUser()" type="submit" class="btn btn-info bra5">确定</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -335,24 +335,26 @@
                 var nickname = $("#inputName").val();
                 commCkTel(tel);
                 var MD5pwd = b64_md5(pwd);
-                $.ajax({
-                    url: apiPath + 'api/crmUser/insert',
-                    type: 'post',
-                    data: {
-                        username: username,
-                        password: MD5pwd,
-                        nickname: nickname,
-                        phoneNumber: tel,
-                        organizationId: p_organizationId,
-                        roleId: global_roid_add
-                    },
-                    dataType: 'JSON',
-                    success: function(res) {
-                        if (res.code == 200) {
-                            $('#addUser').modal('hide');
-                            myOrganList(p_organizationId, '');
+                if (pwd && tel && username && nickname) {
+                    $.ajax({
+                        url: apiPath + 'api/crmUser/insert',
+                        type: 'post',
+                        data: {
+                            username: username,
+                            password: MD5pwd,
+                            nickname: nickname,
+                            phoneNumber: tel,
+                            organizationId: p_organizationId,
+                            roleId: global_roid_add
+                        },
+                        dataType: 'JSON',
+                        success: function(res) {
+                            if (res.code == 200) {
+                                $('#addUser').modal('hide');
+                                myOrganList(p_organizationId, '');
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         </script>
